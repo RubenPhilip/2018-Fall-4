@@ -1,6 +1,6 @@
 # Welcome to ICS4!
 
-1. Review the your course outline: [ICS4U](2018-Fall-4/ICS4U-Course-Outline.docx) or [ICS4C](2018-Fall-4/ICS4C-Course-Outline.docx)
+1. Check out our [Class Site](https://ics4u-ics4c.github.io/2018-Fall-4/)
 2. Create a GitHub account
 3. Record your account info with your instructor to enrol in class
 4. Say [Hello](https://guides.github.com/activities/hello-world/) to GitHub!
