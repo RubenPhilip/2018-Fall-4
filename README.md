@@ -1,6 +1,6 @@
 # Welcome to ICS4!
 
-1. Review the your course outline: [ICS4U](https://github.com/ICS4U-ICS4C/2018-Fall-ICS4/blob/master/ICS4U%20Course%20Outline.docx) or [ICS4C](https://github.com/ICS4U-ICS4C/2018-Fall-ICS4/blob/master/ICS4C%20Course%20Outline.docx)
+1. Check out our [Class Site](https://ics4u-ics4c.github.io/2018-Fall-4/)
 2. Create a GitHub account
 3. Record your account info with your instructor to enrol in class
 4. Say [Hello](https://guides.github.com/activities/hello-world/) to GitHub!
@@ -36,21 +36,7 @@ Each Module should take approximately two weeks. You will complete a quiz and an
 
 **Asignment 0**: [ICS4U](https://classroom.github.com/a/y34EerbD) and [ICS4C](https://classroom.github.com/a/y34EerbD)
 
-**Quiz 0**: Topics to review
-
-## Notes and Learning Resources
-
-Here's what you need to know a
-bout file maintenance and version control
-Here's what you need to know a
-bout file maintenance and version control
-Here's what you need to know a
-bout file maintenance and version control
-
-Here's what you need to know a
-bout file maintenance and version control
-Here's what you need to know a
-bout file maintenance and version control
+**Quiz 0**: [Topics to review](2018-Fall-4/QTopics/QT0.pdf)
 
 ---
 
@@ -59,10 +45,7 @@ bout file maintenance and version control
 
 **Asignment 1**: [ICS4U]() and [ICS4C]()
 
-**Quiz 1**: Topics to review
-
-## Notes and Learning Resources
-Here's what you need to know about
+**Quiz 1**: [Topics to review](2018-Fall-4/QTopics/QT1.pdf)
 
 ---
 
@@ -73,10 +56,6 @@ Here's what you need to know about
 
 **Quiz 2**: Topics to review
 
-## Notes and Learning Resources
-
-Here's what you need to know 
-
 ---
 
 # Module 3
@@ -85,10 +64,6 @@ Here's what you need to know
 **Asignment 3**: ICS4U and ICS4C
 
 **Quiz 3**: Topics to review
-
-## Notes and Learning Resources
-
-Here's what you need to know 
 
 ---
 
@@ -99,10 +74,6 @@ Here's what you need to know
 
 **Quiz 4**: Topics to review
 
-## Notes and Learning Resources
-
-Here's what you need to know 
-
 ---
 
 # Module 5
@@ -111,10 +82,6 @@ Here's what you need to know
 **Asignment 5**: ICS4U and ICS4C
 
 **Quiz 5**: Topics to review
-
-## Notes and Learning Resources
-
-Here's what you need to know 
 
 ---
 
@@ -125,10 +92,6 @@ Here's what you need to know
 
 **Quiz 6**: Topics to review
 
-## Notes and Learning Resources
-
-Here's what you need to know 
-
 ---
 
 # Module 7
@@ -137,10 +100,6 @@ Here's what you need to know
 **Asignment 7**: ICS4U and ICS4C
 
 **Quiz 7**: Topics to review
-
-## Notes and Learning Resources
-
-Here's what you need to know 
 
 --- 
 
@@ -152,9 +111,5 @@ Here's what you need to know
 **Formal Report**: Rubric
 
 **Presentation Dates**
-
-## Notes and Learning Resources
-
-Here's what you need to know 
 
 ---
