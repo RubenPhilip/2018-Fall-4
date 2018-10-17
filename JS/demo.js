@@ -7,7 +7,7 @@ function A1(){
 	} else if (myColour == "yellow"){
 		console.log("This guy chose yellow. Hmm")
 	} else {
-		console.log(fname+" chose a colour I hadn't thought of")
+		console.log(fname+" chose a colour I hadn't thought of: "+myColour)
 	}
 
 }
