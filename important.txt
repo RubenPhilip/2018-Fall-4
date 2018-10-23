@@ -1,0 +1,4 @@
+hello hellogo
+go
+go
+stop

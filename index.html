@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
+<head>
 <title>ICS4</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script type="text/javascript" src="JS/demo.js"></script>
 <style>
   body,h1,h2,h3,h4,h5 {font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
   body {font-size:14px; }
   .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
   .w3-half img:hover{opacity:1}
 </style>
-
+</head>
 <body>
 
 <!-- Sidebar/menu -->
@@ -20,7 +22,8 @@
 	  <h3 style="margin-top:20px;margin-left:20px; margin-bottom:20px" ><b><a href="https://github.com/ICS4U-ICS4C/2018-Fall-4" class="w3-bar-item w3-button w3-hover-white" >Go to GitHub</a><br></h3>
   </div>
   <div class="w3-bar-block">
-    <a href="index.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 0</a> 
+    <a href="index.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Syllabus</a>
+    <a href="Pages/module0.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 0</a>
     <a href="Pages/module1.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 1</a> 
     <a href="Pages/module2.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 2</a> 
     <a href="Pages/module3.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 3</a> 
@@ -52,41 +55,35 @@
 	    absence, it is your responsibility to arrange to complete the assessment ahead of time. In case of illness, you are expected to complete the 
 	    assessment immediately upon return.</p>
   </div> 
+ 
+  <!-- Statement on Plagiarism -->
+  <div class="w3-container" style="margin-top:10px">
+    <h2 class="w3-xxlarge">Plagiarism</h2>  
+    <p style="font-weight:initial">Reuse and building upon ideas or code are major parts of modern software development. As a professional programmer you will never write anything from scratch. <!--A. Feldaman, NYU-->
+	    You are expected to attempt problems and exercises independently and arrive at your own solutions before consulting with your peers. Blindly copying and pasting others'
+	    solutions is not only plagiarism, but is also a waste of time, as you'll cheat yourself out of learning to be a better programmer. However, this class is structured in 
+	    such a way that you may, and are encouraged to, learn from the work of your peers. 
+	    Please respect the terms of use and/or license of any code you find, and if you reimplement 
+	    or duplicate an algorithm or code from elsewhere, credit the original source with an inline comment.<!-- Aidan Feldaman, NYU --><br>
+	    
+      <br>If you are unsure as to what constitutes plagiarism, here is the definition of plagiarism that has been adopted by NYU's School of Continuing and Professional Studies:<br>
+      <br><i><em>"Plagiarism is presenting someone else's work as though it were one's own. More specifically, plagiarism is to present as one's own words quoted without quotation marks from 
+	      another writer; a paraphrased passage from another writer’s work; or facts or ideas gathered, organized, and reported by someone else, orally and/or in writing. 
+	      Since plagiarism is a matter of fact, not of the student's intention, it is crucial that acknowledgement of the sources be accurate and complete. 
+	      Even where there is not a conscious intention to deceive, the failure to make appropriate acknowledgement constitutes plagiarism." </em></i><br> 
+	      
+      <br>
+      Penalties for plagiarism are outlined in our school's student handbook
+    </p>  
+
   <!-- Course Outlines -->
   <div class="w3-container" style="margin-top:10px">
-        <p>Course Outlines: <b><a href="https://ics4u-ics4c.github.io/2018-Fall-4/ICS4C-Course-Outline.docx
-    ">ICS4C</a> or <a href="https://ics4u-ics4c.github.io/2018-Fall-4/ICS4U-Course-Outline.docx
-    ">ICS4U</a></b></p>  
+    <p>Course Outlines: <b><a href="https://ics4u-ics4c.github.io/2018-Fall-4/ICS4C-Course-Outline.docx">ICS4C</a> or <a href="https://ics4u-ics4c.github.io/2018-Fall-4/ICS4U-Course-Outline.docx">ICS4U</a></b>
+    </p>  
   </div>
-	
-	
-  <!-- M0 -->
-  <div class="w3-container" id="M0" style="margin-top:35px">
-    <h1 class="w3-xlarge w3-text-green"><b>Module 0: File Maintenance and Version Control</b></h1>
-    <p style="font-weight:initial">We'll begin by getting to know our way around GitHub and becoming familiar with the basics of Python. 
-    Since students are coming to the course with different levels of experience with Python, we will structure things a little differently.
-    If you are already fairly proficient in Python, you can spend this time becoming familiar with GitHub, or helping your peers who are new to Python. 
-    Items 1 and 2 should be prioritised. Items 3-5 do not need to be completed within module 0, but it's recommended you attempt them at some point in the course once you're comfortable with Python.
-    </p>
-	  
-    <ol style="font-weight:initial">
-      <li>Explore GitHub and complete Asst-0</li>
-      <li>Review Python Topics that will be on Quiz 0</li>
-      <li><a href="https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/">Create a GitHub page</a> (like this one) by creating a gh-pages branch from your own Repository. You can use your github page to organise your assignments or for whatever you like. GitHub hosts your pages for free!</li>
-      <li>If you want to get fancy with your READMEs, and generally be more stylish, look at <a href="https://guides.github.com/features/mastering-markdown/">Markdown Syntax</a>, used to style .md files</li>
-      <li>See me for a challenge (i.e. help me troubleshoot GitHub ahaha)</li>
-    </ol>
-	  
-    <p style="font-weight:initial"><em><i>Optional Python Practice Exercise:</i></em>  Write a program that asks the user to input 10 integers, and then prints the largest odd number that was entered. If no odd number was entered, it should print a message to that effect</p>
-	  
-    <p><b><a href="https://classroom.github.com/a/y34EerbD">Assignment 0: Sept 7 2018</a></b></p>
-    <p><b>Quiz 0: Sept 14 2018</b>
-      <a href="https://github.com/ICS4U-ICS4C/2018-Fall-4/blob/gh-pages/QTopics/QT0.pdf">Topics to Review</a>
-    </p>
-  </div>
-  
 
-
+  <!-- JS demo -->
+  <button onclick="A1()">Click</button>
 <!-- End page content -->
 </div>
 
@@ -94,7 +91,7 @@
 <div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px">	
   <p class="w3-right"> The structure of this course was loosely adapted from Aidan Feldman's 
     <a href="https://github.com/advanced-js">github.com/advanced-js</a> 
-	</br>which is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br /><br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+	<br>which is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br /><br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
   </p>
 </div>
     
