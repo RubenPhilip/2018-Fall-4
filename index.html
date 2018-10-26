@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="../CSS/main.css">
 <script type="text/javascript" src="JS/demo.js"></script>
 <style>
   body,h1,h2,h3,h4,h5 {font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
@@ -82,8 +83,59 @@
     </p>  
   </div>
 
-  <!-- JS demo -->
-  <button onclick="A1()">Click</button>
+
+<style>
+.container {
+    position: relative;
+    width: 50%;
+}
+
+.eximage {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+
+.excontainer:hover .image {
+  opacity: 0.3;
+}
+
+.excontainer:hover .middle {
+  opacity: 1;
+}
+
+.extext {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+</style>
+
+
+<h2>Project Exemplars</h2>
+
+<div class="excontainer">
+  <img src="Images/ori.jpg" alt="Avatar" class="eximage" style="width:100%">
+  <div class="middle">
+    <div class="extext">Thanks FW!</div>
+  </div>
+</div>
+
+
 <!-- End page content -->
 </div>
 
