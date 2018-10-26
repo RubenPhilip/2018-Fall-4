@@ -1,6 +1,6 @@
 .excontainer {
     position: relative;
-    width: 50%;
+    width: 100%;
 }
 
 .eximage {
@@ -33,6 +33,6 @@
 .extext {
   background-color: #4CAF50;
   color: white;
-  font-size: 16px;
+  font-size: 12px;
   padding: 16px 32px;
 }
