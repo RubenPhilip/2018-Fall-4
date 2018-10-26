@@ -1,15 +1,26 @@
 .excontainer {
+
+    background-color: #f1f1f1;
+
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
     position: relative;
-    width: 100%;
+    width: 30%;
+    float: left;
+    padding-top: 0px;
+    padding-right: 8px;
+    padding-bottom: 0px;
+    padding-left: 8px;
+    margin: 10px;  
 }
 
 .eximage {
   opacity: 1;
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   transition: .5s ease;
   backface-visibility: hidden;
+  margin: 20px 0;
 }
 
 .middle {
@@ -33,13 +44,11 @@
 .extext {
   background-color: #4CAF50;
   color: white;
-  font-size: 12px;
-  padding: 16px 32px;
+  font-size: 14px;
+  padding: 16px 16px;
 }
 
 .thirdrow {
-    padding-top: 0px;
-    padding-right: 8px;
-    padding-bottom: 0px;
-    padding-left: 8px;
+    padding: 0.01em 16px;
+    margin: 10px 0;
 }
