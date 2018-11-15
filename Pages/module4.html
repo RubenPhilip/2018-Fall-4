@@ -55,7 +55,7 @@
 	
   <!-- Testing -->
   <div class="w3-container" id="M4" style="margin-top:35px">
-    <h1 class="w3-xlarge w3-text-green"><b>Some Testing Examples</b></h1>
+    <h1 class="w3-xlarge w3-text-green"><b>Testing Your Code</b></h1>
     <p style="font-weight:initial"> 
     Read the following articles from The Hitchhiker's Guide to Python:
     </p>
@@ -68,8 +68,10 @@
 
   <!--Testing Examples-->
   <div class="w3-container" id="M4" style="margin-top:35px">
-    <h1 class="w3-xlarge w3-text-green"><b>Testing</b></h1>
-    <figcaption>Unittest (docs.python-guide.org)</figcaption>
+    <h1 class="w3-xlarge w3-text-green"><b>Some Testing Examples</b></h1>
+    
+    <!-- Unittest Example -->
+    <figcaption style="margin-top:35px;">Unittest (docs.python-guide.org)</figcaption>
     <pre class="prettyprint"><code style="font-family: monospace;font-weight:initial"> 
     import unittest
 
@@ -92,8 +94,9 @@
     if __name__ == '__main__':
         unittest.main()
     </code></pre>
-	  
-    <figcaption>Pytest (https://docs.pytest.org)</figcaption>
+
+    <!-- Pytest Example -->
+    <figcaption style="margin-top:35px;">Pytest (https://docs.pytest.org)</figcaption>
     <pre class="prettyprint"><code style="font-family: monospace;font-weight:initial"> 
     def inc(x):
         return x + 1
@@ -101,10 +104,32 @@
     def test_answer():
         assert inc(3) == 5 #Fails, since inc(3) is 4, not 5
     </code></pre>
+
+    <!-- Doctest Example -->
+    <figcaption style="margin-top:35px;">Doctest (https://docs.pytest.org)</figcaption>
+    <pre class="prettyprint"><code style="font-family: monospace;font-weight:initial"> 
+    def square(x):
+        """Return the square of x.
+
+        >>> square(2)
+        4
+        >>> square(-2)
+        4
+        """
+
+        return x * x
+
+    if __name__ == '__main__':
+        import doctest
+        doctest.testmod()
+    </code></pre>
   </div>
-	 
+	
+
+	
+	
   <!-- Assessments -->
-  <div class="w3-container" id="M4" style="margin-top:35px">
+  <div class="w3-container" id="M4" style="margin-top:35px;">
     <p><b>Assignment 4: Nov 16 2018</b>
       <ol>
         <li>Submit Project Analysis and Planning phases of Software Development Project. Upload a file, Analysis_and_planning.docx, and all supporting docs to your team repo by due date</li> 
