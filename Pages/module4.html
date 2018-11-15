@@ -66,12 +66,19 @@
     </ol>
   </div>	
 
-  <!--Testing Example-->
+  <!--Testing Examples-->
   <div class="w3-container" id="M4" style="margin-top:35px">
-    <h1 class="w3-xlarge w3-text-green"><b>Sample Test</b></h1>
-    <figcaption>test.py</figcaption>
+    <h1 class="w3-xlarge w3-text-green"><b>Testing</b></h1>
+    <figcaption>Unittest (docs.python-guide.org)</figcaption>
     <pre class="prettyprint"><code style="font-family: monospace;font-weight:initial"> 
-    print("dfsdgsfg")#hkadf adf hdg
+    import unittest
+    
+    def fun(x):
+      return x + 1
+    
+    class MyTest(unittest.TestCase):
+      def test(self): 
+        self.assertEqual(fun(3),4)
     </code></pre>
   </div>
 	 
