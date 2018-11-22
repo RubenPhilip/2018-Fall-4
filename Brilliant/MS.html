@@ -57,20 +57,136 @@
  
   <pre class="prettyprint linenums:1">
   <code style="font-family: monospace;font-weight:initial;margin-bottom:40px"> 
-         
-  def samplecode(x):
-      """Return the square of x.
+  #File Import       
+  from EncryptionFunctions import (password, encrypt_message, decrypt_message, new_encrypted_file, pattern_test_function,
+                                 welcome, exit_message, user_encrypted_output, user_decrypted_output,pattern_test_function)
+  
+  #Manual Tests
+  def test_one():
+    '''
+    (str) --> (int)
+    (str) --> (str)
 
-      >>> square(2)
-      4
-      >>> square(-2)
-      4
-      """
+    This function is used to test the program to see if the encryption works sucessfully with a test case
+    
+    '''
+    #defines the function test one
+    password("1992")
+    #calls the function password with the positional arguement of "1992" which servers as the encryption pin
+    scrambled_message = encrypt_message("hello world")
+    #calls the function encrypt_message with the positional arguement "hello world" which serves as the test message
+    #to be encrypted
+    if scrambled_message == "ăŎŖąĀÿŗþùŁĺ":
+    #if the varaible scrambled_message (encrypted output) is equal to scrambled test case, the function works correctly
+        print("Test 1 Passes")
+    else:
+    #if scrambled message does not equal the sample test output, the function has failed the test
+        print("Test 1 Fails")
+    
+def test_two():
+    password("1992")
+    #calls the function password with the pin set to the value of "1992"
+    #This is a preset test pin used to decrypt the message
+    unscrambled_message = decrypt_message("ăŎŖąĀÿŗþùŁĺ")
+    #calls the function decrypt_message with an encrypted version of hello world to be decrypted
+    if unscrambled_message == "hello world":
+        #if the unscrambled output equals the string "hello world"
+        print("Test 2 Passes")
+    else:
+        #if the unscrambled output does not equal the string "hello world"
+        print("Test 2 Fails")
+        
 
-      return x * x
+def test_three():
+    password("2222")
+    scrambled1 = pattern_test_function("aaaaaaaaaaaa")
 
+    if scrambled1[0] != scrambled1[5] and scrambled1[3] != scrambled1[4]:
+        print("Test 3 passes")
+    else:
+        print("Test 3 fails")
+
+
+def test_four():
+    file_name = "Test four file"
+    new_encrypted_file('Test four file',"ăŎŖąĀÿŗþùŁĺ")
+    with open(file_name + '.txt', 'r', encoding='utf-8') as f:
+        x = f.read()
+        f.close()
+    if x == "ăŎŖąĀÿŗþùŁĺ":
+        print("Test 4 Passes")
+    else:
+        print("Test 4 Fails")
+
+def test_five():
+    #repeats tests to ensure that they work when repeated
+    test_one()              #calls the function test_one()
+    test_two()              #calls the function test_two()
+    test_three()            #calls the function test_three()
+    test_four()             #calls the function test_four()
+    
+#Pytest
+def test_encryption():
+    password("1992")
+    assert encrypt_message("hello world") == "ăŎŖąĀÿŗþùŁĺ"
+    assert decrypt_message("ăŎŖąĀÿŗþùŁĺ") == "hello world"
+  
+def test_pattern(): 
+    password("2222")
+    scrambled1 = pattern_test_function("aaaaaaaaaaaa")
+
+    assert scrambled1[0] != scrambled1[5]
+    assert scrambled1[3] != scrambled1[4]
+
+def test_file_write():
+    file_name = "Test four file"
+    new_encrypted_file('Test four file',"ăŎŖąĀÿŗþùŁĺ")
+    with open(file_name + '.txt', 'r', encoding='utf-8') as f:
+        x = f.read()
+        f.close()
+
+    assert x == "ăŎŖąĀÿŗþùŁĺ"
+
+def test_repetition():
+    test_encryption()
+    test_pattern()
+    test_file_write()
+
+
+
+pytest.main("EncryptionTests.py --capture=sys")
+#runs pytest in idle
+
+def user_intent():
+    '''
+
+    This function calls the function associated with the user's selection.
+
+            
+    '''
+    if user_selection == 1:       #if user_selection is 1, call function encrypt_message()
+        user_pin()
+        password(pin)
+        msg_to_encrypt()
+        user_encrypted_output(encrypt_message(input_message))
+        
+    elif user_selection == 2:       #if user_selection is 2, call function decrypt_message()
+        user_pin()
+        password(pin)
+        msg_to_decrypt()
+        user_decrypted_output(decrypt_message(encrypted_input))
+        
+    elif user_selection == 3:       #if user_selection is 3, call function new_encrypted_file()
+        user_pin()
+        password(pin)
+        msg_to_encrypt()
+        file_name_input()
+        new_encrypted_file(file_name,encrypt_message(input_message))
+	
+	
   </code></pre>
 </div>    
+
 
 <!--END OF PAGE CONTENT-->
 		
