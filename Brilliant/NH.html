@@ -1,90 +1,1611 @@
-<!DOCTYPE html>
-<html>
-<title>ICS4</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="../CSS/main.css">
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=py&amp;skin=default"></script>
-<style>
-  body,h1,h2,h3,h4,h5 {font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
-  body {font-size:14px; }
-  .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
-  .w3-half img:hover{opacity:1}
-</style>
+"""
+------------------------------------------------------------------------------------------------------------------------
+Nathaniel Hu
+ICS4U0
+Python Assignment #2: Python Object Oriented Programming Introduction
+Ms. S. Pais
+Version 0.2.3
+------------------------------------------------------------------------------------------------------------------------
+This is World Of Wizards; a text-based game where users can purchase wizards, level them up and fights monsters and
+other wizards.
+------------------------------------------------------------------------------------------------------------------------
+"""
 
-<body>
+# import time and random modules to supplement the wizard and monster generators, and add real time delay effects
+import time
+import random
 
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-green w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
-  <a href="javascript:void(0)" onclick="w_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
-  <div class="w3-container">
-	  <h3 style="margin-top:20px;margin-left:20px; margin-bottom:20px" ><b><a href="https://github.com/ICS4U-ICS4C/2018-Fall-4" class="w3-bar-item w3-button w3-hover-white" >Go to GitHub</a><br></h3>
-  </div>
-  <div class="w3-bar-block">
-    <a href="../index.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Syllabus</a>
-    <a href="../Pages/module0.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 0</a>
-    <a href="../Pages/module1.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 1</a> 
-    <a href="../Pages/module2.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 2</a> 
-    <a href="../Pages/module3.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 3</a> 
-    <a href="../Pages/module4.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 4</a> 
-    <a href="../Pages/module5.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 5</a>
-    <a href="../Pages/module6.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 6</a> 
-    <a href="../Pages/module7.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 7</a> 
-    <a href="../Pages/module8.html" onclick="w_close()" class="w3-bar-item w3-button w3-hover-white">Module 8</a>
-  </div>
-</nav>
+# creates global lists to store all possible wizard attributes, including wizard name, attacks, attack types, damage
+# values (per attack), talents and buffs; lists to be used for generating wizards with unique sets of attributes
+names = ["Avoxius", "Uxar", "Urim", "Talin", "Uvae", "Agaell", "Enisinore", "Izedeis"]
 
-<!-- Top menu on small screens -->
-<header class="w3-container w3-top w3-hide-large w3-green w3-xlarge w3-padding">
-  <a href="javascript:void(0)" class="w3-button w3-green w3-margin-right" onclick="w_open()">☰</a>
-  <span>ICS4</span>
-</header>
+attacks = ["Razor Rocks", "Mountain Mash", "Stone Smash", "Dust Devils",
+           "Fireball Frenzy", "Blitzkrieg Blaze", "Searing Strike", "Combustion Charge",
+           "Water Whip", "Hailstorm ", "Icy Incursion", "Frozen Fusillade",
+           "Tempest Tornado", "Aerial Avalanche", "Lightning Lash", "Whirlwind Waste"]
+attack_types = ["Earth", "Earth", "Earth", "Earth", "Fire", "Fire", "Fire", "Fire",
+                "Water", "Water", "Water", "Water", "Air", "Air", "Air", "Air"]
+damage_values = [2, 4, 6, 8, 2, 4, 6, 8, 2, 4, 6, 8, 2, 4, 6, 8]
 
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large" onclick="w_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+talents = ["Endurance", "Healing", "Might", "Flying"]
+buffs = ["Armour", "Health", "Damage", "Speed"]
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:340px;margin-right:40px">
- 
-  <!-- Header -->
-  <div class="w3-container" style="margin-top:50px" id="">
-    <h1 class="w3-xxlarge"><b>NH</b></h1>
-    <p style="font-weight:initial">A description, if you like</p>
-  </div> 
+# creates used names list to store names already in use (to prevent duplicate wizard name use by the wizard generator)
+used_names = []
 
-  <!-- YOUR CODE (paste between the <code> and </code> tags) -->
- 
-  <pre class="prettyprint linenums:1">
-  <code style="font-family: monospace;font-weight:initial;margin-bottom:40px"> 
-         
-  def samplecode(x):
-      """Return the square of x.
+# creates global lists to store all possible monster attributes, including monster name, attacks, damage values (per
+# attack); lists to be used for generating monsters with unique sets of attributes
+monster_names = ["Orc", "Troll", "Bandersnatch", "Ogre", "Gremlin", "Banshee", "Revenant", "Golem", "Werewolf",
+                 "Basilisk"]
 
-      >>> square(2)
-      4
-      >>> square(-2)
-      4
-      """
+monster_attacks = ["Brute Bite", "Crooked Claw", "Skull Smash", "Club Crunch", "Blood Burn"]
+monster_damage_values = [2, 4, 6, 8, 9]
 
-      return x * x
+# creates global list to store all possible player rank titles the player can attain
+player_rank_titles = ["Apprentice", "Adept", "Mage", "Enchanter", "Sorcerer", "Necromancer", "Summoner", "Trickster",
+                      "Arch-Mage", "Spellbinder", "Arcane Wizard", "Grand Master"]
 
-  </code></pre>
-</div>    
+# creates global lists to store all possible items in the player's inventory
+player_currency_inv = ["Wizard Stones: ", "Earth Stones: ", "Water Stones: ", "Fire Stones: ", "Air Stones: ", "Gold: "]
+player_health_potions_inv = ["Basic Potions: ", "Supreme Potions: ", "Master Potions: ", "Revive Potions: "]
 
-<!--END OF PAGE CONTENT-->
-		
-<script>
-// Script to open and close sidebar
-function w_open(){
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-} 
-function w_close(){
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-</script>
+# creates global variables to store: 1 instance of Player class (for player), 6 instances of Wizard class (5 for player
+# wizards, 1 for arena rogue wizard), and 1 instance of Monster class (for forest monster)
+player, wizard1, wizard2, wizard3, wizard4, wizard5 = (), (), (), (), (), ()
+rogue_wizard, monster = (), ()
+# list created to store all player summoned wizards (instances of Wizard class)
+wizards = []
 
-</body>
-</html>
+
+# Wizard class: contains all possible methods and attributes related to the player summoned wizard characters
+class Wizard:
+
+
+    # init method; initiates instance of the Wizard class, and states all of the attributes of each wizard; function
+    # imports randomly generated wizard attributes, and assigns values to corresponding self variables
+    def __init__(self, name, cost_earth, cost_water, cost_fire, cost_air, wizard_level, wizard_level_progress, max_hp,
+                 current_hp, wizard_attacks, wizard_attack_types, wizard_damage_values, wizard_talent, wizard_buff,
+                 buff_amount, iff):
+        # assigns imported values to the following Wizard class specific variables (wizard attributes): name, cost
+        # (in earth, water, fire and air stones), wizard level and level progress, max/current hp, wizard attacks and
+        # attack types, damage values (per attack), the wizard talent, wizard buff specs (buff and amount) and iff
+        self.name = name
+        self.cost = [cost_earth * wizard_level, cost_water * wizard_level, cost_fire * wizard_level, cost_air *
+                     wizard_level]
+        self.wizard_level = wizard_level
+        self.wizard_level_progress = wizard_level_progress
+        self.max_hp = max_hp
+        self.current_hp = current_hp
+        self.attacks = wizard_attacks
+        self.attack_types = wizard_attack_types
+        self.damages = wizard_damage_values
+        self.wizard_talent = wizard_talent
+        self.wizard_buff_specs = [wizard_buff, buff_amount]
+        self.iff = iff
+
+    # attack method; randomly chooses a wizard attack, retrieves its associated damage value, and applies any wizard
+    # talents/buffs to the outputted raw damage; referenced whenever a wizard is attacking a monster or another wizard
+    def attack(self):
+        # randomly generates integer value between 0 and 3 (possible integer values: 0, 1, 2, 3); stored in rand_num
+        rand_num = random.randint(0, 3)
+        # randomly generated integer value used as index value to retrieve wizard attack, attack type and damage value
+        attack_name = self.attacks[rand_num]
+        attack_type = self.attack_types[rand_num]
+        attack_damage = self.damages[rand_num]
+
+        # creates variable iff; stands for identification friend or foe, used by program to determine whether wizard is
+        # friendly (player owned) or foe (enemy wizard in arena)
+        iff = ""
+
+        # tests for wizard talent; runs if wizard talent affects damage dealt by wizard (i.e. Might)
+        if self.wizard_talent == "Might":
+            # randomly generates integer value between 0 and 1 (possible integer values: 0, 1)
+            rand_num = random.randint(0, 1)
+            # tests randomly generated integer value; runs if integer value is 1
+            if rand_num == 1:
+                # increases attack damage dealt by 2 points
+                attack_damage += 2
+            # runs if integer value is not 1 (is 0)
+            else:
+                # passes onto next code block
+                pass
+        # runs if wizard talent does not affect damage dealt by wizard (i.e. Endurance, Healing or Flying)
+        else:
+            # passes onto next code block
+            pass
+
+        # tests for wizard buff; runs if wizard buff affects damage dealt by wizard (i.e. Damage)
+        if self.wizard_buff_specs[0] == "Damage":
+            # increases attack damage dealt by the wizard buff amount (1 buff point = 1 added damage point)
+            attack_damage += self.wizard_buff_specs[1]
+        # runs if wizard buff does not affect damage dealt by wizard (i.e. Armour, Health or Speed)
+        else:
+            # passes onto next code block
+            pass
+
+        # test iff variable value of the attacking wizard (Wizard class instance); runs if value is "friend"
+        if self.iff == "friend":
+            # assigns the string value "Your wizard, " to variable iff; to be used in final wizard attack output message
+            iff = "Your wizard, "
+        # runs if iff variable value of the attacking wizard (Wizard class instance) is value "foe" (only other option)
+        else:
+            # passes on to next code block
+            pass
+
+        # prints output message, displaying wizard name, iff indicator, attack name, attack type and raw damage dealt
+        print("----------------------------------------------------------------\n" + iff + self.name + " used the " +
+              attack_type + " type attack, " + attack_name + ", and dealt " + str(attack_damage) + " points of raw " +
+                                                                                                   "damage.")
+
+        # returns the raw attack damage dealt to the referencing variable (used to reference this method)
+        return attack_damage
+
+    # defend method; takes in the raw damage dealt by the monster or other wizard, applies wizard talents/buffs (which
+    # affect the net damage taken by the wizard) before outputting the damage taken (and amount healed as applicable)
+    def defend(self, raw_damage):
+        """ (int) -> int, int
+        returns net damage taken (and amount healed) by wizard after talents/buffs are applied
+            defend(5)
+                if buff == "Endurance":
+        3, 0
+            defend(7)
+                if buff == "Healing":
+        7, 2
+        """
+        # raw_damage value retrieved and stored in variable damage_taken
+        damage_taken = raw_damage
+        # damage_healed variable value initially set to 0
+        damage_healed = 0
+
+        # creates variable rand_num; to be used to store integer values to determine effect of wizard talents/buffs
+        rand_num = int()
+
+        # creates variable iff; stands for identification friend or foe, used by program to determine whether wizard is
+        # friendly (player owned) or foe (enemy wizard in arena)
+        iff = ""
+
+        # tests for wizard talent; runs if talent affects damage taken by wizard (i.e. Endurance, Healing or Flying)
+        if self.wizard_talent != "Might":
+            # assigns randomly chosen number (0 or 1) to variable rand_num; to be used in determining talent effects
+            rand_num = random.randint(0, 1)
+        # runs if wizard talent does not affect damage taken by wizard (i.e. Might)
+        else:
+            # wizard damage dealt and healing are unaffected; code passes onto next block
+            pass
+        # tests rand_num variable value; runs if tested value is 1 (wizard talent will take effect)
+        if rand_num == 1:
+            # tests for wizard talent; runs if talent is "Endurance" or "Flying"
+            if (self.wizard_talent == "Endurance") or (self.wizard_talent == "Flying"):
+                # reduces damage taken by 2 points per wizard level (talent effect)
+                damage_taken -= 2 * self.wizard_level
+                # tests damage taken value, runs if it is less than 0 (is a negative integer value)
+                if damage_taken < 0:
+                    # assigns value of 0 to damage value variable
+                    damage_taken = 0
+                # runs assuming damage taken value is greater than 0
+                else:
+                    # passes onto next code block
+                    pass
+
+            # runs assuming talent is "Healing" (only other talent affecting damage taken by wizard)
+            else:
+                # increases damage healed by 2 points per wizard level (talent effect)
+                damage_healed += 2 * self.wizard_level
+        # runs if rand_num value is tested to be 0 (wizard talent will not take effect)
+        else:
+            # wizard damage dealt and healing are unaffected; code passes onto next block
+            pass
+
+        # tests for wizard buff; runs if buff affects damage taken by wizard (i.e. Armour, Speed or Health)
+        if self.wizard_buff_specs[0] != "Damage":
+            # assigns randomly chosen number (0 or 1) to variable rand_num; to be used in determining buff effects
+            rand_num = random.randint(0, 1)
+        # runs if wizard buff does not affect damage taken by wizard (i.e. Damage)
+        else:
+            # wizard damage dealt and healing are unaffected; code passes onto next block
+            pass
+        # tests rand_num variable value; runs if tested value is 1 (wizard buff will take effect)
+        if rand_num == 1:
+            # tests for wizard buff; runs if buff is "Armour" or "Speed"
+            if (self.wizard_buff_specs[0] == "Armour") or (self.wizard_buff_specs[0] == "Speed"):
+                # reduces damage taken by 2 points per wizard level (buff effect)
+                damage_taken -= self.wizard_buff_specs[1] * self.wizard_level
+            # runs assuming buff is "Health" (other other buff affecting damage taken by wizard)
+            else:
+                # increases damage healed by 2 points per wizard level (buff effect)
+                damage_healed += self.wizard_buff_specs[1] * self.wizard_level
+
+        # updates the current hp of the wizard by applying the amounts of damage taken/healed
+        self.current_hp -= damage_taken
+        self.current_hp += damage_healed
+
+        # tests if current hp of the wizard is smaller than 0 (is an invalid amount of hp)
+        if self.current_hp < 0:
+            # updates current hp to 0 (absolute minimum hp value)
+            self.current_hp = 0
+        # runs assuming current hp of the wizard is greater than or equal to 0 (is a valid amount of hp)
+        else:
+            # wizard's current health is unaffected; code passes onto next block
+            pass
+
+        # tests value of variable iff; runs if variable value is string "friend"
+        if self.iff == "friend":
+            # assigns string value "Your wizard, " to variable iff (for use in damage message to user)
+            iff = "Your wizard, "
+        # runs assuming the value of iff is "foe" (the only other possibility)
+        else:
+            # passes onto next code block
+            pass
+
+        # prints output message, displaying iff indicator, wizard name, damage taken/healed and current/max hp of wizard
+        print("----------------------------------------------------------------\n" + iff + self.name + " has taken " +
+              str(damage_taken) + " points of damage, and has been healed for " + str(damage_healed) + " health points."
+              + "\nWizard HP: " + str(self.current_hp) + " / " + str(self.max_hp))
+
+
+# Player class: contains all possible attributes related to the player (game user) in the game
+class Player:
+    # init function; initiates instance of the Player class, and states all of the attributes of the player; function
+    # imports generated player attributes, and assigns values to corresponding self variables
+    def __init__(self, name, rank_title, earth_stones, water_stones, fire_stones, air_stones, player_level,
+                 level_progress, wizard_stones, gold, basic_potions, supreme_potions, master_potions, revive_potions):
+        # assigns imported values to the following Player class specific variables (player attributes): name, rank
+        # title, elemental stones inventory (earth, water. fire and air stones), player level, level progress, wizard
+        # stones, gold and healing potions inventory (basic, supreme, master and revival health potions)
+        self.name = name
+        self.rank_title = rank_title
+        self.stones_inv = [earth_stones, water_stones, fire_stones, air_stones]
+        self.player_level = player_level
+        self.level_progress = level_progress
+        self.wizard_stones = wizard_stones
+        self.gold = gold
+        self.healing_potions = [basic_potions, supreme_potions, master_potions, revive_potions]
+
+
+# Monster class; contains all possible methods and attributes related to the program generated enemy monsters
+class Monster:
+    # init method; initiates instance of the Monster class; and states all of the attributes of the monster; function
+    # imports randomly generated monster attributes, and assigns values to corresponding self variables
+    def __init__(self, name, level, monster_hp, mons_attacks, damages, rewards):
+        # assigns imported values to the following Monster class specific variables (monster attributes): name, level,
+        # health points, attack names, damage values and rewards (earth, water, air and fire stones, gold and xp)
+        self.name = name
+        self.level = level
+        self.monster_hp = monster_hp
+        self.monster_max_hp = monster_hp
+        self.monster_attacks = mons_attacks
+        self.damages = damages
+        self.rewards = rewards
+
+    # attack method; randomly chooses a monster attack and retrieves its associated damage value, and assigns it as the
+    # outputted raw damage; referenced whenever a monster is attacking a wizard
+    def attack(self):
+        # random integer value chosen between 0 and 3 (possible integer values: 0, 1, 2, 3); stored in rand_num
+        rand_num = random.randint(0, 3)
+        # randomly generated integer value used as index value to retrieve monster attack and damage value
+        attack_name = self.monster_attacks[rand_num]
+        attack_damage = self.damages[rand_num]
+
+        # prints output message, displaying monster name, attack and raw damage dealt
+        print("----------------------------------------------------------------\nThe " + self.name +
+              " used the attack, " + attack_name + ", and dealt " + str(attack_damage) + " points of raw damage.")
+
+        # returns the raw attack damage dealt to the referencing variable (used to reference this method)
+        return attack_damage
+
+    # defend method; takes in the raw damage dealt by the wizard, applies and outputs it as the damage taken
+    def defend(self, raw_damage):
+        # raw_damage value retrieved and stored in variable damage_taken
+        damage_taken = raw_damage
+        # updates the current hp of the monster by applying the amount of damage taken
+        self.monster_hp -= damage_taken
+
+        # tests if current monster hp is less than 0 (is an invalid amount of hp)
+        if self.monster_hp < 0:
+            # updates current monster hp to 0 (absolute minimum hp value)
+            self.monster_hp = 0
+        # runs assuming current hp of the monster is equal to or greater than 0 (is a valid amount of hp)
+        else:
+            # monster's health is unaffected; passes onto next code block
+            pass
+
+        # print final output message, displaying the monster name, damage taken and remaining/max hp
+        print("----------------------------------------------------------------\nThe " + self.name + " has taken " +
+              str(damage_taken) + " points of damage.\nMonster HP: " + str(self.monster_hp) + " / " +
+              str(self.monster_max_hp))
+
+
+# wizard generator function; takes imported lists of values (wizard names, attacks, attack types, damage values,
+# talents and buffs) and randomly generates some variable/unique attributes for each Wizard class instance
+def wizard_generator(wiz_names, wiz_attacks, wiz_types, wiz_damages, wiz_talents, wiz_buffs):
+    # references global list used_names (for use to ensure no duplicate use of wizard names)
+    global used_names
+    # randomly chooses an integer value between 0 and 7 (possible integer values: 0, 1, 2, 3, 4, 5, 6, 7); assigned to
+    # variable wiz_rand_num; random integer then used as an index value to retrieve wizard name from imported name list
+    wiz_rand_num = random.randint(0, 7)
+    wiz_name = wiz_names[wiz_rand_num]
+
+    # while loop; iterates while current retrieved wizard name has already been used (is in used_names list)
+    while wiz_name in used_names:
+        # randomly chooses integer between 0 and 7, for use as index value to retrieve wizard name from imported list
+        wiz_rand_num = random.randint(0, 7)
+        wiz_name = wiz_names[wiz_rand_num]
+
+    # appends current wiz_name to the global list used_names
+    used_names.append(wiz_name)
+
+    # wizard level assigned to value 1; level progress assigned to value 0; wizard max_hp set to base of 50 (plus 25
+    # additional health points per wizard level past level 1); max_hp value also assigned to wizard's current hp
+    wiz_level, wiz_level_prog = 1, 0
+    wiz_max_hp = 50 + (wiz_level - 1) * 25
+    wiz_current_hp = wiz_max_hp
+
+    # randomly chooses an integer value between 0 and 3 (possible integer values: 0, 1, 2, 3); assigned to variable
+    # wiz_rand_num; random integer then used as an index value to retrieve wizard talent and buff
+    wiz_rand_num = random.randint(0, 3)
+    wiz_talent = wiz_talents[wiz_rand_num]
+    wiz_buff = wiz_buffs[wiz_rand_num]
+    # wizard buff effect amount is set by multiplying wizard_level by 2; value assigned to variable wiz_buff_amount
+    wiz_buff_amount = wiz_level * 2
+
+    # lists created wiz_attacks_num to store index values (to retrieve wizard attacks); # wiz_attacks_names to store
+    # attacks; wiz_attack_types to store attack types; wiz_damage_values to store attack damage values
+    wiz_attacks_num, wiz_attack_names, wiz_attack_types, wiz_damage_values = [], [], [], []
+
+    # creates variables to store wizard elemental stones worth/value, in terms of earth, water, fire and air stones
+    earth_price, water_price, fire_price, air_price = int(), int(), int(), int()
+
+    # while loop; iterates while there are less than 4 attacks stored in the index values list wiz_attacks_num
+    while len(wiz_attacks_num) < 4:
+        # randomly chooses integer value between 1 and 15 (possible integer values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        # 11, 12, 13, 14, 15); value stored in attack_num; stored in wiz_attacks_num list if not already in that list
+        attack_num = random.randint(0, 15)
+        # tests if attack_num value already exists in the list wiz_attacks_num; runs if it already does
+        if attack_num in wiz_attacks_num:
+            # passes onto next code; duplicate numbers are not entered into the list (unique digits only entered once)
+            pass
+        # runs assuming attack_num value does not already exist in the list wiz_attacks_num
+        else:
+            # appends the integer value in variable attack_num to the list wiz_attacks_num; to be used as index numbers
+            wiz_attacks_num.append(attack_num)
+
+    # for loop; iterates for quantity of integer index values stored in the list wiz_attacks_num
+    for num in wiz_attacks_num:
+        # num variable value used as index value to retrieve an attack, its associated type and damage value; the
+        # retrieved values appended to the following lists: wiz_attack_names. wiz_attack_types, wiz_damage_values
+        wiz_attack_names.append(wiz_attacks[num])
+        wiz_attack_types.append(wiz_types[num])
+        # wizard damage values increased based upon wizard level
+        wiz_damage_values.append(wiz_damages[num] + (wiz_level - 1))
+
+    # for loop; iterates per attack type stored in the list wiz_attack_types
+    for a_type in wiz_attack_types:
+        # tests attack type; runs if type is "Earth"
+        if a_type == "Earth":
+            # increases earth stones value of wizard by 5 stones
+            earth_price += 5
+        # tests attack type; runs if type is "Water"
+        elif a_type == "Water":
+            # increases water stones value of wizard by 5 stones
+            water_price += 5
+        # tests attack type; runs if type is "Fire"
+        elif a_type == "Fire":
+            # increases fire stones value of wizard by 5 stones
+            fire_price += 5
+        # runs assuming that attack type is "Air" (the only other attack type not yet tested)
+        else:
+            # increases air stones value of wizard by 5 stones
+            air_price += 5
+
+    # returns the following values to the variable referencing this function; wizard name, earth/water/fire/air stones
+    # values, level, level progress, max/current hp, attack names, types and damage values, talent, buff and buff amount
+    return wiz_name, earth_price, water_price, fire_price, air_price, wiz_level, wiz_level_prog, wiz_max_hp, \
+        wiz_current_hp, wiz_attack_names, wiz_attack_types, wiz_damage_values, wiz_talent, wiz_buff, wiz_buff_amount
+
+
+# monster generator function; takes imported lists of values (monster names and player level), and randomly generates
+# some variable/unique attributes for the Monster class instance
+def monster_generator(mons_names, player_lvl):
+    # randomly chooses integer value between 0 and 9 (possible integer values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9); stored in
+    # variable mons_rand_num; further used as index number to retrieve monster name, which is then stored in mons_name
+    mons_rand_num = random.randint(0, 9)
+    mons_name = mons_names[mons_rand_num]
+
+    # tests player's level; runs if player's level is equal to or smaller than 2
+    if player_lvl <= 2:
+        # randomly chooses integer value between 1 and 2 higher than the player's level; assigns value as monster level
+        mons_level = random.randint(1, player_lvl + 2)
+    # runs assuming player level is greater than 2
+    else:
+        # randomly chooses integer value between 2 higher/lower than the player's level; assigns value as monster level
+        mons_level = random.randint(player_lvl - 2, player_lvl + 2)
+
+    # generates monster hp by multiplying monster level by 20; assigns end value to variable mons_hp
+    mons_hp = mons_level * 20
+
+    # randomly generates the possible quantities of rewards that come from successfully slaying this monster; reward
+    # stones start at 1 and gold starts at 10; both can be increased by chance; reward xp is equal to monster level * 5
+    earth_stone = 1 + random.randint(0, 2)
+    water_stone = 1 + random.randint(0, 2)
+    fire_stone = 1 + random.randint(0, 2)
+    air_stone = 1 + random.randint(0, 2)
+    gold_pieces = 1 + random.randint(0, 2)
+    xp = mons_level * 5
+    # all randomly generated reward quantities are then stored in the list mons_rewards; all multiplied by monster level
+    mons_rewards = [earth_stone * mons_level, water_stone * mons_level, fire_stone * mons_level, air_stone * mons_level,
+                    gold_pieces * 10 * mons_level, xp]
+
+    # returns the following values to the variable referencing this function; monster name, level, hp and rewards
+    return mons_name, mons_level, mons_hp, mons_rewards
+
+
+# player generator function; takes import values (player name and rank titles) and generates the starting attributes of
+# the starting instance of the Player class
+def player_generator(input_name, rank_titles):
+    # input_name variable value assigned to variable name
+    name = input_name
+    # level assigned starting value of 1; level progress assigned starting value of 0
+    lvl, lvl_progress = 1, 0
+    # very first rank title in list rank titles is assigned to variable rank
+    rank = rank_titles[0]
+    # starting inventory of earth, water, fire and air stones are all assigned a value of 0
+    wizard_stones, earth_stones, water_stones, fire_stones, air_stones = 0, 0, 0, 0, 0
+    # starting amount of gold is assigned a starting value of 500
+    gold = 500
+    # starting inventory of basic, supreme, master and revival health potions are all assigned a value of 2
+    basic_potions, supreme_potions, master_potions, revive_potions = 2, 2, 2, 2
+
+    # returns the following values to the variable referencing this function (the player object); player name, rank
+    # title, earth/water/fire/air stones inventory, level and level progress, wizard stones inventory, starting gold
+    # amount and health potions inventory (basic, supreme, master and revival potions)
+    return name, rank, earth_stones, water_stones, fire_stones, air_stones, lvl, lvl_progress, wizard_stones, gold, \
+        basic_potions, supreme_potions, master_potions, revive_potions
+
+
+# start menu function; runs at the game's initial start
+def start_menu():
+    # delay of 1 second
+    time.sleep(1)
+
+    # displays game header and starting game description to the console; text spread over multiple lines
+    print("\n===================================== World Of Wizards Game ====================================" +
+          "\n\nWelcome to the game, World Of Wizards.\nIn World Of Wizards, you have the opportunity to recruit and " +
+          "train wizards, level up and upgrade\nwizard attacks and buffs, while fighting monsters and other wizards.")
+
+
+# player generation function; references the player and wizard functions, and sets up the player's stats and wizards
+def player_generation():
+    # referencing global variables/lists/objects wizards, wizard1, wizard_2 and player (to be used later on)
+    global wizards, wizard1, wizard2, player
+    # delay of 1.5 seconds
+    time.sleep(1.5)
+    # displays prompt message to get player inputted game player name; stores inputted name to variable username
+    username = input("------------------------------------------------------------------------------------------------"
+                     + "\nI am pleased that you could join us today. Please enter in your player name, here: ")
+    # delay of 1 second
+    time.sleep(1)
+    # displays personalized welcome message to player; informing of the initial two wizards and cap of 5 wizards
+    print("Welcome, " + username + ". You will start off with two wizards, and can have a maximum of 5 wizards.")
+
+    # following listed variables are grouped together and used to reference and store the output values generated by
+    # the player_generator function (with the user inputted username and player_rank_titles list inputted in)
+    player_name, rank_title, earth_stones, water_stones, fire_stones, air_stones, player_level, level_progress, \
+        wizard_stones, gold, basic_potion, supreme_potion, master_potion, revive_potion = \
+        player_generator(username, player_rank_titles)
+    # an instance of the Player class is created, importing the previously generated values stored in the aforementioned
+    # listed variables group; the class instance is stored in the variable/object "player"
+    player = Player(player_name, rank_title, earth_stones, water_stones, fire_stones, air_stones, player_level,
+                    level_progress, wizard_stones, gold, basic_potion, supreme_potion, master_potion, revive_potion)
+
+    # delay of 1.5 seconds
+    time.sleep(1.5)
+    # displays the initial post player setup message to the user, informing them of his/her player stats; this includes
+    # their player name, rank title, level, current progress and wizard/elemental stone and health potion inventories
+    print("----------------------------------------------------------------\nHere are your player stats.\n" +
+          "--------------------------------\nName:", player_name, "\nRank Title:", rank_title, "\nPlayer Level:",
+          str(player_level), "\nLevel Progress:", str(level_progress), "/", str(player_level * 10), "\n" +
+          "--------------------------------\nPlayer Inventory:\nWizard Stones:", str(wizard_stones), "\nEarth Stones:",
+          str(earth_stones), "\nWater Stones:", str(water_stones), "\nFire Stones:", str(fire_stones), "\nAir Stones:",
+          str(air_stones), "\n\nGold:", str(gold), "\n\nBasic Health Potions:", str(basic_potion),
+          "\nSupreme Health Potions:", str(supreme_potion), "\nMaster Health Potions:", str(master_potion),
+          "\nRevival Potions:", str(revive_potion))
+
+    # variable iff assigned string value of "friend"; is used by code to differentiate between friendly/enemy wizards
+    iff = "friend"
+
+    # below variables store wizard_generator function outputs (with imported lists); outputs: name, earth/water/fire/air
+    # values, level, progress, current/max hp, attacks, attack types, damage values, talent, buff and buff amount
+    name, cost_earth, cost_water, cost_fire, cost_air, wizard_level, wizard_level_progress, max_hp, current_hp, \
+        wizard_attacks, wizard_attack_types, wizard_damage_values, wizard_talent, wizard_buff, buff_amount = \
+        wizard_generator(names, attacks, attack_types, damage_values, talents, buffs)
+    # an instance of the Wizard class is created, importing the previously generated values stored in the aforementioned
+    # listed variables group; the class instance is stored in the variable/object "wizard1"
+    wizard1 = Wizard(name, cost_earth, cost_water, cost_fire, cost_air, wizard_level, wizard_level_progress, max_hp,
+                     current_hp, wizard_attacks, wizard_attack_types, wizard_damage_values, wizard_talent, wizard_buff,
+                     buff_amount, iff)
+    # appends object wizard1 to the global list, wizards
+    wizards.append(wizard1)
+
+    # below variables store wizard_generator function outputs (with imported lists); outputs: name, earth/water/fire/air
+    # values, level, progress, current/max hp, attacks, attack types, damage values, talent, buff and buff amount
+    name, cost_earth, cost_water, cost_fire, cost_air, wizard_level, wizard_level_progress, max_hp, current_hp, \
+        wizard_attacks, wizard_attack_types, wizard_damage_values, wizard_talent, wizard_buff, buff_amount = \
+        wizard_generator(names, attacks, attack_types, damage_values, talents, buffs)
+    # an instance of the Wizard class is created, importing the previously generated values stored in the aforementioned
+    # listed variables group; the class instance is stored in the variable/object "wizard2"
+    wizard2 = Wizard(name, cost_earth, cost_water, cost_fire, cost_air, wizard_level, wizard_level_progress, max_hp,
+                     current_hp, wizard_attacks, wizard_attack_types, wizard_damage_values, wizard_talent, wizard_buff,
+                     buff_amount, iff)
+    # appends object wizard2 to the global list, wizards
+    wizards.append(wizard2)
+
+    # delay of 2.5 seconds
+    time.sleep(2.5)
+    # print line separator and message to tell user that wizard stats will be displayed next
+    print("----------------------------------------------------------------\nHere are your wizards' stats.")
+
+    # for loop; iterates for number of wizards stored in global list, wizards
+    for wizard in wizards:
+        # delay of 5 seconds
+        time.sleep(5)
+        # displays wizard stats: name, earth/water/fire/air value, level, progress, current/max hp, talent, buff, amount
+        print("----------------------------------------\nName: " + wizard.name + "\nWizard Value:\n" +
+              str(wizard.cost[0]) + " Earth Stones\n" + str(wizard.cost[1]) + " Water Stones\n" + str(wizard.cost[2]) +
+              " Fire Stones\n" + str(wizard.cost[3]) + " Air Stones" + "\n------------------------\nWizard Level: " +
+              str(wizard.wizard_level) + "\nLevel Progress: " + str(wizard.wizard_level_progress) + " / " +
+              str(wizard_level * 5) + "\n------------------------" + "\nCurrent/Max Health Points: " +
+              str(wizard.current_hp) + " / " + str(wizard.max_hp) + "\n------------------------\nWizard Talent: " +
+              wizard.wizard_talent + "\nWizard Buff: " + wizard.wizard_buff_specs[0] + "\nWizard Buff Amount: " +
+              str(wizard.wizard_buff_specs[1]) + "\n------------------------\nWizard Attacks: (name/type/damage)")
+        # for loop; iterates for number of wizard attacks stored in selected wizards attacks attribute
+        for counter in range(0, len(wizard.attacks)):
+            # displays attack number, name, type and current damage value
+            print(str(counter + 1) + ". " + wizard.attacks[counter] + " / " + wizard.attack_types[counter] + " / " +
+                  str(wizard.damages[counter]))
+
+
+# play/quit function; allows player to choose to either play or quit the game
+def play_quit():
+    # delay of 3 seconds
+    time.sleep(3)
+    # displays user choice input prompts; takes user string inputs (play/quit)
+    quit_play = input("------------------------------------------------------------------------------------------------"
+                      + "\nWould you like to (continue to) play the game, or quit?\nPlease enter your choice (play/quit"
+                      + "), here: ")
+    # while loop runs if user input is not "play" nor "quit" (limits valid user inputs to those two)
+    while (quit_play != "play") and (quit_play != "quit"):
+        # delay of 0.5 seconds
+        time.sleep(0.5)
+        # displays re-entry prompt to console; retakes user inputs
+        quit_play = input("Sorry, but that was an invalid choice, Please re-enter a valid choice (play/quit), here: ")
+
+    # if statement tests if user input is string "play"
+    if quit_play == "play":
+        # continues on to run the main program processing function
+        pass
+    # else statement runs; assumes user input is string "quit" (since there is no other valid option)
+    else:
+        # references and runs the quit function
+        quit_function()
+
+
+# in_game function; controls all in game functions (fight in forest/fight in arena, review inventory or shop)
+def in_game():
+    # creates list player_choices; stores all possible player options (forest, arena, review or shop)
+    player_choices = ["forest", "arena", "review", "shop"]
+    # delay of 1.5 seconds
+    time.sleep(1.5)
+    # displays line separator and starting message to player, informing him/her of all possible in game options
+    print("------------------------------------------------------------------------------------------------\n" +
+          "Welcome to World Of Wizards. You may go and fight monsters in the forest, fight other wizards\nin the " +
+          "arena, review your wizards/inventory, or visit the Druid Shop.")
+
+    # displays prompt message, takes in player choice of the possible in game options (forest, arena, review or shop)
+    player_choice = input("----------------------------------------" + "\nPlease input your choice, (forest/arena/" +
+                          "review/shop) here: ")
+    # takes player input, reduces all input letters to lowercase
+    player_choice.lower()
+
+    # while loop; iterates while the player's input choice is not in the list player_choices (thus not a valid choice)
+    while player_choice not in player_choices:
+        # display prompt message, take in player's re-entered choice of the possible in game options
+        player_choice = input("Sorry, but that was an invalid input. Please re-input your choice, (forest/arena/review"
+                              + "/shop) here: ")
+        # takes player input, reduces all input letters to lowercase
+        player_choice.lower()
+
+    # tests player choice; runs if player choice is "forest"
+    if player_choice == "forest":
+        # references and runs the fight_forest() function
+        fight_forest()
+    # tests player choice; runs if player choice is "arena"
+    elif player_choice == "arena":
+        # references and runs the fight_arena() function
+        fight_arena()
+    # tests player choice; runs if player choice is "review"
+    elif player_choice == "review":
+        # references and runs the review_wiz_inv() function
+        review_wiz_inv()
+    # runs assuming player choice is "shop" (the only other valid option)
+    else:
+        # references and runs the druid_shop() function
+        druid_shop()
+
+
+# fight_forest function; allows the player to have his/her wizards fight monsters in the forest
+def fight_forest():
+    # global variables: wizard1, wizard2, wizard3, wizard4, wizard5, monster, player, monster attacks, damage values
+    global wizards, monster, player, monster_attacks, monster_damage_values
+
+    # below variables store monster_generator function outputs (with imported lists); monster name, level, hp, rewards
+    monster_name, monster_level, monster_hp, monster_rewards = monster_generator(monster_names, player.player_level)
+    # an instance of the Monster class is created, importing the previously generated values stored in the
+    # aforementioned listed variables group; the class instance is stored in the variable/object "monster"
+    monster = Monster(monster_name, monster_level, monster_hp, monster_attacks, monster_damage_values, monster_rewards)
+
+    # creates player choices list to store player options (fight or flee)
+    player_choices = ["fight", "flee"]
+
+    # displays message to player indicating that the band of wizards has encountered a specific monster (level included)
+    print("------------------------------------------------------------------------------------------------\n" +
+          "You and your band of wizards wander into the forest... and come upon... a level " + str(monster.level),
+          monster.name + "!")
+    # displays prompt message, takes player choice (either fight or flee)
+    player_choice = input("----------------------------------------\nYou can choose to either fight the monster, or " +
+                          "flee and return to fight another day.\nEnter your choice (fight/flee), here: ")
+    # takes player input, and converts all letters to lowercase
+    player_choice.lower()
+
+    # while loop; iterates while player choice is not in the list player choices (is not "fight" or "flee")
+    while player_choice not in player_choices:
+        # displays prompt message, retakes player choice (fight or flee)
+        player_choice = input("Sorry, but that choice was invalid. Please re-enter a valid input (fight/flee), here: ")
+        # takes player input, and converts all letters to lowercase
+        player_choice.lower()
+
+    # tests player choice; runs if player choice is "fight"
+    if player_choice == "fight":
+        # displays line separator and short message informing the player that his/her wizards will be displayed
+        print("----------------------------------------------------------------\nHere are your wizards in your band:")
+        # for loop; iterates for number of wizards stored in list wizards
+        for wiz in range (0, len(wizards)):
+            # displays the wizard's band number and name
+            print(str(wiz + 1) + ". " + str(wizards[wiz].name))
+
+        # creates variable wiz_options, for use in player wizard choice prompt message (see below)
+        wiz_options = "(1/2)"
+        # creates list user_choices, for use in player wizard choice algorithm (see below)
+        player_choices = [1, 2]
+
+        # tests length of wizards list (# of wizards); runs if length is 2
+        if len(wizards) == 2:
+            # passes onto next code block (number of wizards and options remain unchanged)
+            pass
+        # tests length of wizards list (# of wizards); runs if length is 3
+        elif len(wizards) == 3:
+            # assigns string value with numbers 1, 2 and 3; to indicate to player possible player wizard choices
+            wiz_options = "(1/2/3)"
+            # appends integer value 3 to list player_choices (adds 3 as possible wizard choice)
+            player_choices.append(3)
+        # tests length of wizards list (# of wizards); runs if length is 4
+        elif len(wizards) == 4:
+            # assigns string value with numbers 1, 2, 3 and 4; to indicate to player possible player wizard choices
+            wiz_options = "(1/2/3/4)"
+            # extends list player_choices with integer values 3 and 4 (adds 3 and 4 as possible wizard choices)
+            player_choices.extend([3, 4])
+        # runs assuming length of wizards list (# of wizards) is 5
+        else:
+            # assigns string value with numbers 1, 2, 3, 4 and 5; to indicate to player possible player wizard choices
+            wiz_options = "(1/2/3/4/5)"
+            # extends list player_choices with integer values 3, 4 and 5 (adds 3, 4 and 5 as possible wizard choices)
+            player_choices.extend([3, 4, 5])
+
+        # while loop; iterates infinitely (until code breaks out of loop)
+        while True:
+            # try logic structure; attempts to complete program functions
+            try:
+                # displays prompt message with possible options, takes player choice of wizard (wizard band number)
+                player_choice = int(input("----------------------------------------------------------------\nWhich one "
+                                          + "of your wizards would you like to fight the " + monster.name + "?" +
+                                          "\nPlease indicate your choice " + wiz_options + ", here: "))
+                # tests player choice; runs if player choice (integer value) is not a possible wizard option
+                if player_choice not in player_choices:
+                    # prints error prompt message to player; previous code is rerun to retake player choice
+                    print("Sorry, but that wizard band slot is empty; there is no wizard currently stored there.")
+                # runs assuming player has inputted integer value that is a possible wizard option
+                else:
+                    # breaks out of infinite while loop
+                    break
+            # except logic structure; runs if program encounters value error (i.e. player inputs non-integer characters)
+            except ValueError:
+                # prints error prompt message to player; previous code is rerun to retake player choice
+                print("Sorry, but that was an invalid choice; that wizard does not exist in your current band.")
+
+        # reduces player choice value by 1; end value to be used as index value to select the corresponding wizard
+        player_choice -= 1
+
+        # displays message to player indicating the name of the wizard who was chosen and accepted the call to fight
+        print("Your wizard, " + wizards[player_choice].name + ", has accepted the call to fight the " + monster.name +
+              ".")
+
+        # while loop; iterates while both the selected wizard's and the monster's remaining health are greater than 0
+        while (wizards[player_choice].current_hp > 0) and (monster.monster_hp > 0):
+            # delay fo 2 seconds
+            time.sleep(2)
+            # runs attack() method for Wizard class instance (fighting wizard); damage stored in variable wiz_damage
+            wiz_damage = wizards[player_choice].attack()
+            # runs defend() method for Monster class instance (defending monster); intakes damage stored in wiz_damage
+            monster.defend(wiz_damage)
+            # tests monster's current health; runs if it is equal to 0
+            if monster.monster_hp == 0:
+                # breaks out of the while loop immediately
+                break
+            # runs assuming monster's current health is not equal to 0 (is greater than 0)
+            else:
+                # passes onto next code block
+                pass
+
+            # delay of 2 seconds
+            time.sleep(2)
+            # runs attack() method for Monster class instance (fighting monster); damage stored in variable mons_damage
+            mons_damage = monster.attack()
+            # runs defend() method for Wizard class instance (defending wizard); intakes damage stored in mons_damage
+            wizards[player_choice].defend(mons_damage)
+
+        # tests selected wizard's remaining health; runs if it is 0 (wizard has been defeated)
+        if wizards[player_choice].current_hp == 0:
+            # prints message to player, indicating that chosen wizard has been defeated by monster
+            print("----------------------------------------------------------------\nYour wizard, " +
+                  wizards[player_choice].name + ", has been defeated by the " + monster.name + "!" +
+                  "\nYour band has been defeated, and you retreat back to fight again another day.")
+        # runs assuming monster's remaining health is 0 (monster defeated; wizard's remaining health is greater than 0)
+        else:
+            # prints message to player, indicating that chosen wizard has defeated the monster
+            print("----------------------------------------------------------------\nYour wizard, " +
+                  wizards[player_choice].name + ", has defeated the " + monster.name + "!" +
+                  "\nYour band is victorious, and you leave the forest, bound to return to fight again.")
+
+            # takes monster reward values (# of stones, gold and xp) and stores in temporary reward storage variables
+            reward_earth_stones, reward_water_stones = monster.rewards[0], monster.rewards[1]
+            reward_fire_stones, reward_air_stones = monster.rewards[2], monster.rewards[3]
+            reward_gold, reward_xp = monster.rewards[4], monster.rewards[5]
+
+            # prints message to player, listing all rewards received from successfully defeating monster
+            print("----------------------------------------------------------------\nYou have received the following " +
+                  "rewards:\nEarth Stones: " + str(reward_earth_stones) + "\nWater Stones: " + str(reward_water_stones)
+                  + "\nFire Stones: " + str(reward_fire_stones) + "\nAir Stones: " + str(reward_air_stones) +
+                  "\nGold: " + str(reward_gold) + "\nXP: " + str(reward_xp))
+            # takes values stored in temporary reward variables; adds to player's inventory/level (stones, gold, xp)
+            player.stones_inv[0] += reward_earth_stones
+            player.stones_inv[1] += reward_water_stones
+            player.stones_inv[2] += reward_fire_stones
+            player.stones_inv[3] += reward_air_stones
+            player.gold += reward_gold
+            player.level_progress += reward_xp
+
+            # tests player level progress; runs if it meets/exceeds current level threshold (current player level * 10)
+            if player.level_progress >= player.player_level * 10:
+                # player level progress is reduced by the value of the current level threshold (xp reset for next level)
+                player.level_progress -= player.player_level * 10
+                # player level is increased by 1 (player levels up)
+                player.player_level += 1
+                # player rank title is updated to the title associated with the player's new level
+                player.rank_title = player_rank_titles[player.player_level - 1]
+                # prints message to player, indicating that he/she has leveled up, and the rank title he/she received
+                print("----------------------------------------\nYou have leveled up! You are now level " +
+                      str(player.player_level) + ", and have received the rank title, " + player.rank_title +
+                      ". Congratulations!")
+            # runs assuming that player level progress does not meet/exceed level threshold
+            else:
+                # passes onto next code block
+                pass
+
+            # print message to user, indicating the amount of xp that the selected wizard has received
+            print("----------------------------------------------------------------\nYour wizard, " +
+                  wizards[player_choice].name + ", has received " + str(reward_xp) + " XP points.")
+            # adds amount of received xp to wizard's current xp (level progress)
+            wizards[player_choice].wizard_level_progress += reward_xp
+
+            # tests selected wizard's level progress; runs if it meets/exceeds current level threshold (wiz level * 5)
+            if wizards[player_choice].wizard_level_progress >= wizards[player_choice].wizard_level * 5:
+                # wizard level progress is reduced by the value of the current level threshold (xp reset for next level)
+                wizards[player_choice].wizard_level_progress -= wizards[player_choice].wizard_level * 5
+                # wizard level is increased by 1 (wizard levels up)
+                wizards[player_choice].wizard_level += 1
+                # prints message to player, indicating that the selected wizard has leveled (message includes level #)
+                print("----------------------------------------\nYour wizard, " + wizards[player_choice].name +
+                      ", has leveled up, and is now level " + str(wizards[player_choice].wizard_level) +
+                      ".\nYour wizard's max hp and attack damages have been increased, and your wizard has been fully "
+                      + "healed. Congratulations!")
+                # selected wizard's max hp is increased by 25 health points
+                wizards[player_choice].max_hp += 25
+                # selected wizard's current hp is increased to the wizard's new max hp
+                wizards[player_choice].current_hp = wizards[player_choice].max_hp
+                # all of the selected wizard's attacks damage values are increased by 1 additional damage point each
+                wizards[player_choice].damages = [wizards[player_choice].damages[0] + 1,
+                                                  wizards[player_choice].damages[1] + 1,
+                                                  wizards[player_choice].damages[2] + 1,
+                                                  wizards[player_choice].damages[3] + 1]
+                # selected wizard's buff amount (2nd value in buff specs list) is increased by 2 additional points
+                wizards[player_choice].wizard_buff_specs[1] += 2
+            # runs assuming wizard's level progress does not meet/exceed level threshold
+            else:
+                # passes onto next code block
+                pass
+    # runs assuming player choice is "flee" (the only other possible option)
+    else:
+        # prints message to player, indicating that the band of wizards (lead by player) has fled from the monster
+        print("You and your band have fled from the " + monster.name + ". You and your band plan to return again.")
+
+
+# fight arena function; allows the player to have his/her wizards fight other wizards in the arena
+def fight_arena():
+    # references global variables rogue_wizard (Wizard class instance), player (Player class instance) and wizards list
+    global rogue_wizard, player, wizards
+
+    # player choices list storing possible player options (fight or forfeit)
+    player_choices = ["fight", "forfeit"]
+
+    # below variables store wizard_generator function outputs (with imported lists); outputs: name, earth/water/fire/air
+    # values, level, progress, current/max hp, attacks, attack types, damage values, talent, buff and buff amount
+    name, cost_earth, cost_water, cost_fire, cost_air, wizard_level, wizard_level_progress, max_hp, current_hp, \
+        wizard_attacks, wizard_attack_types, wizard_damage_values, wizard_talent, wizard_buff, buff_amount = \
+        wizard_generator(names, attacks, attack_types, damage_values, talents, buffs)
+
+    # tests player's level; runs if it is smaller than 3
+    if player.player_level < 3:
+        # passes onto next code block
+        pass
+    # runs assuming player's level is greater than 3
+    else:
+        # randomly selects integer value between -2 and 2 (possible values: -2, -1, 0, 1, 2); assigns to rand_num
+        rand_num = random.randint(-2, 2)
+        # adjusts wizard level (increase/decrease) using the integer value stored in rand_num
+        wizard_level += rand_num
+        # sets damage increase value to one less than wizard level
+        dmg_inc = wizard_level - 1
+        # adjusts wizard attack damage values (increase/decrease) using the damage increase value in variable dmg_inc
+        wizard_damage_values = [wizard_damage_values[0] + dmg_inc, wizard_damage_values[1] + dmg_inc,
+                                wizard_damage_values[2] + dmg_inc, wizard_damage_values[3] + dmg_inc]
+
+    # assigns string value "foe" to variable iff (for use by program to indicate friendly/enemy wizards)
+    iff = "foe"
+
+    # an instance of the Wizard class is created, importing the previously generated values stored in the aforementioned
+    # listed variables group; the class instance is stored in the variable/object "rogue_wizard"
+    rogue_wizard = Wizard(name, cost_earth, cost_water, cost_fire, cost_air, wizard_level, wizard_level_progress,
+                          max_hp, current_hp, wizard_attacks, wizard_attack_types, wizard_damage_values, wizard_talent,
+                          wizard_buff, buff_amount, iff)
+
+    # displays arena intro message to player, indicating to the player the level and name of the opponent wizard
+    print("------------------------------------------------------------------------------------------------\n" +
+          "You and you band of wizards enter the arena and sign up in the tournament.\nFor your battle, you will be " +
+          " facing off against a level " + str(rogue_wizard.wizard_level) + " wizard by the name of " +
+          rogue_wizard.name + ".")
+
+    # displays message to player, prompting user to either forfeit the match and leav the arena, or fight the wizard
+    player_choice = input("----------------------------------------\nYou can choose to either fight the wizard, or " +
+                          "forfeit the battle and return to fight another day.\nWhat do you do? Enter your choice " +
+                          "(fight/forfeit), here: ")
+    # takes player input, and converts all letters to lowercase
+    player_choice.lower()
+
+    # while loop; iterates while the player's input choice is not in the list player choices (is not fight or forfeit)
+    while player_choice not in player_choices:
+        # displays error prompt message to player, retakes player choice (fight or flee)
+        player_choice = input("Sorry, but that was an invalid choice. Please re-enter a valid input (fight/forfeit), " +
+                              "here: ")
+        # takes player input, and converts all letters to lowercase
+        player_choice.lower()
+
+    # tests player choice; runs if it is "fight"
+    if player_choice == "fight":
+        # displays message to player, indicating to him/her that all band wizards will be displayed shortly
+        print("\nHere is a list of all wizards in your tournament band. ")
+
+        # for loop; iterates for to number of wizards currently in the band
+        for counter in range(1, len(wizards) + 1):
+            # displays wizard band number and name to the player (counter subtract 1 used as index value to get names)
+            print(str(counter) + ". " + wizards[counter - 1].name)
+
+        # infinite while loop
+        while True:
+            # try structure attempts to take and process player input
+            try:
+                # displays prompt message to player, takes the integer band number value of player's selected wizard
+                player_choice = int(input("Please enter the band number of the wizard you would like to have fight in "
+                                          + "the arena, here: "))
+                # reduces player input by 1 (is to be used as index value to retrieve the appropriate wizard)
+                player_choice -= 1
+
+                # tests player choice; runs if player choice integer value is between 0 and length of wizards list
+                if 0 <= player_choice < len(wizards):
+                    # breaks out of infinite while loop
+                    break
+                # runs assuming player choice integer value is outside of valid integer range (> 0 or < wizards length)
+                else:
+                    # displays error message to player, and redirects player back to re-enter his/her wizard choice
+                    print("Sorry, but that was an invalid wizard band number. Please choose another wizard.")
+            # except structure runs if a value error occurs (i.e. player enters non-integer characters or float values)
+            except ValueError:
+                print("Sorry, but that was an invalid input. Please re-enter a valid integer value to choose a wizard.")
+
+        # displays message to player, indicating that selected wizard has accepted call to fight opposing wizard
+        print("Your wizard, " + wizards[player_choice].name + ", has accepted the call to fight the wizard, " +
+              rogue_wizard.name + ".")
+
+        # while loop; iterates while both the friendly and opposing wizard's hp are greater than 0 (arr able to fight)
+        while (wizards[player_choice].current_hp > 0) and (rogue_wizard.current_hp > 0):
+            # delay of 2 seconds
+            time.sleep(2)
+            # runs attack() method for Wizard class instance (friendly wizard); damage stored in variable wiz_damage
+            wiz_damage = wizards[player_choice].attack()
+            # runs defend() method for Wizard class instance (enemy wizard); intakes damage stored in wiz_damage
+            rogue_wizard.defend(wiz_damage)
+            # tests enemy wizard's current health; runs if it is equal to 0
+            if rogue_wizard.current_hp == 0:
+                # breaks out of while loop immediately
+                break
+            # runs assuming enemy wizard's health is not equal to 0 (is gretaer than 0)
+            else:
+                # passes onto next code block
+                pass
+
+            # delay of 2 seconds
+            time.sleep(2)
+            # runs attack() method for Wizard class instance (enemy wizard); damage stored in variable wiz_damage
+            wiz_damage = rogue_wizard.attack()
+            # runs defend() method for Wizard class instance (friendly wizard); intakes damage stored in wiz_damage
+            wizards[player_choice].defend(wiz_damage)
+
+        # tests player selected wizard's current health; runs if current health is equal to 0 (friendly wizard defeated)
+        if wizards[player_choice].current_hp == 0:
+            # displays message to player indicating that his/her wizard has been defeated by the enemy wizard
+            print("----------------------------------------------------------------\nYour wizard, " +
+                  wizards[player_choice].name + ", has been defeated by the wizard. " + rogue_wizard.name + "!" +
+                  "\nYour band has been defeated, and you retreat back to fight again another day.")
+        # runs assuming enemy wizard's current health is equal to 0 (only other possible reason previous loop is ended)
+        else:
+            # displays message to player indicating that his/her wizard has defeated the enemy wizard
+            print("----------------------------------------------------------------\nYour wizard, " +
+                  wizards[player_choice].name + ", has defeated the wizard, " + rogue_wizard.name + "!" +
+                  "\nYour band is victorious, and you leave the arena, bound to return to fight again.")
+            # retrieves the rewards of defeating the enemy wizard and storing them in temporarily reward variables;
+            # rewards retrieved include earth, fire, water and air stones, gold and xp
+            reward_earth_stones = rogue_wizard.cost[0] + (random.randint(0, 1) * rogue_wizard.wizard_level)
+            reward_water_stones = rogue_wizard.cost[1] + (random.randint(0, 1) * rogue_wizard.wizard_level)
+            reward_fire_stones = rogue_wizard.cost[2] + (random.randint(0, 1) * rogue_wizard.wizard_level)
+            reward_air_stones = rogue_wizard.cost[3] + (random.randint(0, 1) * rogue_wizard.wizard_level)
+            reward_gold = (rogue_wizard.wizard_level + random.randint(0, 1)) * 10
+            reward_xp = (rogue_wizard.wizard_level + random.randint(0, 1)) * 5
+            # displays message to player, showing the aforementioned rewards he/she has received for winning the fight
+            print("----------------------------------------------------------------\nYou have received the following " +
+                  "rewards:\nEarth Stones: " + str(reward_earth_stones) + "\nWater Stones: " + str(reward_water_stones)
+                  + "\nFire Stones: " + str(reward_fire_stones) + "\nAir Stones: " + str(reward_air_stones) +
+                  "\nGold: " + str(reward_gold) + "\nXP: " + str(reward_xp))
+            # adds the aforementioned rewards to the variables containing the active player's inventory
+            player.stones_inv[0] += reward_earth_stones
+            player.stones_inv[1] += reward_water_stones
+            player.stones_inv[2] += reward_fire_stones
+            player.stones_inv[3] += reward_air_stones
+            player.gold += reward_gold
+            player.level_progress += reward_xp
+
+            # tests player's current level progress; runs if it meets/exceeds the current level threshold
+            if player.level_progress >= player.player_level * 10:
+                # player's current level progress is reduced by a value equal to the current level threshold (reset)
+                player.level_progress -= player.player_level * 10
+                # player's level is increased by 1 (player has leveled up)
+                player.player_level += 1
+                # retrieves and assigns new player rank title to variable rank_title (player level used as index value)
+                player.rank_title = player_rank_titles[player.player_level - 1]
+                # displays message to player, indicating that he/she has leveled up, and shows his/her new rank title
+                print("----------------------------------------\nYou have leveled up! You are now level " +
+                      str(player.player_level) + ", and have received the rank title, " + player.rank_title +
+                      ". Congratulations!")
+            # runs assuming that player's current level progress does not meet/exceed the current level threshold
+            else:
+                # passes onto next code block
+                pass
+
+            # displays message to player, indicating the amount of xp points that the selected wizard has received
+            print("----------------------------------------------------------------\nYour wizard, " +
+                  wizards[player_choice].name + ", has received " + str(reward_xp) + " XP points.")
+            # adds the received xp points to the selected wizard's current xp level progress
+            wizards[player_choice].wizard_level_progress += reward_xp
+            # tests wizard's level progress; runs if progress meets/exceeds the current level progress threshold
+            if wizards[player_choice].wizard_level_progress >= wizards[player_choice].wizard_level * 5:
+                # reduces level progress by current progress threshold value (resets level progress for next level)
+                wizards[player_choice].wizard_level_progress -= wizards[player_choice].wizard_level * 5
+                # adds one level to selected wizard (wizard has leveled up)
+                wizards[player_choice].wizard_level += 1
+                # displays message to player, indicating that the wizard has leveled up (fully healed, improved stats)
+                print("----------------------------------------\nYour wizard, " + wizards[player_choice].name +
+                      ", has leveled up, and is now level " + str(wizards[player_choice].wizard_level) +
+                      ". Congratulations! Your wizard has also been fully healed, and received stat improvements!")
+                # selected wizard's max hp is increased by 25 health points (stat improvement)
+                wizards[player_choice].max_hp += 25
+                # selected wizard's current hp is reset to new max health points (full heal)
+                wizards[player_choice].current_hp = wizards[player_choice].max_hp
+                # selected wizard's attack damages increased by 1 damage point per attack (stat improvements)
+                wizards[player_choice].damages = [wizards[player_choice].damages[0] + 1,
+                                                  wizards[player_choice].damages[1] + 1,
+                                                  wizards[player_choice].damages[2] + 1,
+                                                  wizards[player_choice].damages[3] + 1]
+                # selected wizard's buff amount increased by 2 buff points (stat improvement)
+                wizards[player_choice].wizard_buff_specs[1] += 2
+            # runs assuming wizard's level progress does not meet/exceed teh current level progress threshold
+            else:
+                # passes onto next code block
+                pass
+
+    # runs assuming player choice is "forfeit" (the only other option)
+    else:
+        # displays message to user, indicating that the arena battle has been forfeited
+        print("You and your band have forfeited the tournament challenge. You and your band plan to return again.")
+
+
+# review wiz inv function; allows the player to review his/her wizards or current inventory, or return to the main menu
+def review_wiz_inv():
+    # references global variable wizards (player's wizards list) and Player Class instance in player
+    global wizards, player
+
+    # player choices list storing possible player options (wizs, inv or exit)
+    player_choices = ["wizs", "inv", "exit"]
+
+    # delay of 1.5 seconds
+    time.sleep(1.5)
+    # displays review intro to player; indicates to player all possible review options and asks player to choose option
+    player_choice = input("-----------------------------------------------------------------------------------------" +
+                          "-------\nWelcome to your wizards/inventory review.\nYou can choose to either review your " +
+                          "wizards individual stats (wizs), review your player inventory (inv), or exit the review " +
+                          "(exit).\n----------------------------------------\nPlease input your choice (wizs/inv/" +
+                          "exit), here: ")
+    # takes player input and converts all letters to lowercase
+    player_choice.lower()
+
+    # while loop; iterates while player choice input is not in list player choices (thus is an invalid choice)
+    while player_choice not in player_choices:
+        # displays error message to player, prompts for and retakes player review choice option
+        player_choice = input("Sorry, but that was an invalid choice. Please re-enter a valid choice (wizs/inv/exit)," +
+                              " here: ")
+        # takes player input and converts all letters to lowercase
+        player_choice.lower()
+
+    # tests player choice; runs if it is "wizs"
+    if player_choice == "wizs":
+        # delay of 1.5 seconds
+        time.sleep(1.5)
+        # displays welcome message to player for wizards review function; indicates what wizard stats can be reviewed
+        print("----------------------------------------------------------------\nWelcome to your wizards review. Here, "
+              + "you can review your wizards stats, inclusive of name, attacks, elemental value, xp, levels and buffs.")
+
+        # for loop; iterates for number of wizards stored in wizards list
+        for counter in range(0, len(wizards)):
+            # displays wizard's band number and name to the player in a list form
+            print(str(counter + 1) + ". " + wizards[counter].name)
+
+        # creates empty list to be stored in variable wizs_to_dis (to used to hold the wizards to be displayed)
+        wizs_to_dis = []
+        # creates empty list to be stored in variable wiz_nums (to be used to store selected wizard band numbers)
+        wiz_nums = []
+        # creates tuple with valid integers player can enter (1, 2, 3, 4 and/or 5); stored in variable valid_ints
+        valid_ints = ("1", "2", "3", "4", "5")
+
+        # displays prompt message to player, indicating possible valid input options (1, 2, 3, 4, 5 and/or all)
+        player_choice = input("----------------------------------------\nPlease indicate the wizards that you would " +
+                              "like to see the stats for (type in the numbers from the names list above with spaces " +
+                              "in between numbers), or type \"all\", if you would like to see the stats of all of " +
+                              "your wizards.\n----------------------------------------\nPlease indicate your choice " +
+                              "(1/2/3/4/5/all), here: ")
+        # takes player input and converts all letters to lowercase
+        player_choice.lower()
+
+        # tests player choice; runs if player input is string "all" or string input contains the word "all" in it
+        if (player_choice == "all") or ("all" in player_choice):
+            # for loop; iterates for number of wizards stored in wizards list
+            for counter in range(0, len(wizards)):
+                # appends each wizard in the player's wizard band to the list wizs_to_dis (counter used as index value)
+                wizs_to_dis.append(wizards[counter])
+                # appends each wizard's band number to the list wiz_nums (index value (counter) plus 1)
+                wiz_nums.append(counter + 1)
+        # runs assuming player input is not string "all" or string input does not contain the word "all" in it
+        else:
+            # for loop; iterates for number of characters in the player's input string
+            for char in player_choice:
+                # tests character in player's input string; runs if it is a valid integer (in valid_ints list)
+                if char in valid_ints:
+                    # tests character's integer value; runs if it is greater than length of wizards list
+                    if (int(char) > len(wizards)) and (int(char) <= 5):
+                        # displays error message to player, indicating that the selected wizard does not exist
+                        print("Sorry, but that wizard band slot is empty; there is no wizard in slot #" + char + ".")
+                    # tests character's integer value; runs if it is greater than 5 (thus invalid)
+                    elif (int(char) > 5) or (int(char) < 1):
+                        # displays error message to player, indicating inputted number is outside of possible slot range
+                        print("Sorry, but that wizard slot number " + char + ", is outside of the possible slots range "
+                              + "(minimum of wizard slot #1, maximum of wizard slot #5).")
+                    # runs assuming character's integer value is between 1 and 5 inclusive (thus is valid)
+                    else:
+                        # appends the wizard with the associated band slot number to the list wizs_to_dis
+                        wizs_to_dis.append(wizards[int(char) - 1])
+                        # appends the wizard's band slot number to the list wiz_nums
+                        wiz_nums.append(int(char))
+                # runs assuming character in player's input string is not a valid integer value (not in valid_ints list)
+                else:
+                    # passes onto next character in the player's input string (onto next code once last letter tested)
+                    pass
+
+        # for loop; iterates for number of number of wizard numbers in list wiz_nums
+        for num in wiz_nums:
+            # delay of 2 seconds
+            time.sleep(2)
+            # wizard number less 1 used as index value to retrieve Wizard class instance from wizards list
+            wizard = wizards[num - 1]
+            # displays the retrieved wizard's slot #, name, wizard value (earth, water, fire and air stones), level,
+            # level progress, current/max hp, talent, buff, buff amount and wizard attacks names, types and damages
+            print("----------------------------------------\nBand Slot #" + str(num) + ":\nName: " + wizard.name +
+                  "\nWizard Value:\n" + str(wizard.cost[0]) + " Earth Stones\n" + str(wizard.cost[1]) +
+                  " Water Stones\n" + str(wizard.cost[2]) + " Fire Stones\n" + str(wizard.cost[3]) + " Air Stones" +
+                  "\n------------------------\nWizard Level: " + str(wizard.wizard_level) + "\nLevel Progress: " +
+                  str(wizard.wizard_level_progress) + " / " + str(wizard.wizard_level * 5) + "\n----------------------"
+                  + "--" + "\nCurrent/Max Health Points: " + str(wizard.current_hp) + " / " + str(wizard.max_hp) +
+                  "\n------------------------\nWizard Talent: " + wizard.wizard_talent + "\nWizard Buff: " +
+                  wizard.wizard_buff_specs[0] + "\nWizard Buff Amount: " + str(wizard.wizard_buff_specs[1]) +
+                  "\n------------------------\nWizard Attacks: (name/type/damage)")
+            # each of retrieved wizard's attacks' specs (name/type/damages) displayed in list format using for loop
+            for counter in range(0, len(wizard.attacks)):
+                print(str(counter + 1) + ". " + wizard.attacks[counter] + " / " + wizard.attack_types[counter] + " / " +
+                      str(wizard.damages[counter]))
+
+    # tests player choice; runs if it is "inv"
+    elif player_choice == "inv":
+        # delay of 1.5 seconds
+        time.sleep(1.5)
+        # displays welcome message to player for inventory review function; indicates viewable player inventory/specs
+        print("----------------------------------------------------------------\nWelcome to your player inventory " +
+              "review.\nHere, you can review your player inventory and stats, inclusive of all stones, gold, player " +
+              "level, xp, rank title, and health potions.\n----------------------------------------\nHere is an " +
+              "overview of your player inventory: ")
+
+        # displays player's stones inventory and health potions inventory
+        print("----------------------------------------\nWizard Stones: " + str(player.wizard_stones) +
+              "\nEarth Stones: " + str(player.stones_inv[0]) + "\nWater Stones: " + str(player.stones_inv[1]) +
+              "\nFire Stones: " + str(player.stones_inv[2]) + "\nAir Stones: " + str(player.stones_inv[3]) +
+              "\n\nGold: " + str(player.gold) + "\n\nBasic Health Potions: " + str(player.healing_potions[0]) +
+              "\nSupreme Health Potions: " + str(player.healing_potions[1]) + "\nMaster Health Potions: " +
+              str(player.healing_potions[2]) + "\nRevival Potions: " + str(player.healing_potions[3]))
+
+        # displays message separator and indicates that player stats will be displayed next
+        print("----------------------------------------\nHere is an overview of your player stats: ")
+
+        # displays the player's name, rank title, level and level progress
+        print("----------------------------------------\nName: " + player.name + "\nRank Title: " +
+              player.rank_title + "\nLevel: " + str(player.player_level) + "\nLevel Progress: " +
+              str(player.level_progress) + " / " + str(player.player_level * 10))
+
+    # runs assuming player choice is "exit"
+    else:
+        # delay of 1.5 seconds
+        time.sleep(1.5)
+        # displays message indicating to user that he/she is exiting the review and will be redirected to the main menu
+        print("----------------------------------------------------------------\nYou are now exiting the " +
+              "wizard/inventory review, and will be returned to the main menu momentarily.")
+
+
+# druid shop function; allows the player to buy shop items, exchange resources, heal wizards or exit back to main menu
+def druid_shop():
+    # import global variables player (Player Class instance) and wizards (list storing player's wizards)
+    global player, wizards
+
+    # infinite while loop
+    while True:
+        # player choices list storing possible player options (buy, exchange, heal or exit)
+        player_choices = ["buy", "exchange", "heal", "exit"]
+
+        # displays intro message to player, indicates all possible in game choices and describes functions of each
+        print("------------------------------------------------------------------------------------------------" +
+              "\nWelcome to the Druid Shop.\nHere, you can choose to either make purchases (buy), exchange currency/" +
+              "resources (exchange), review and heal your wizards after battles (heal), or exit the Druid Shop (exit).")
+
+        # displays prompt message, intake player choice (buy/exchange/heal/exit); converts all letters to lowercase
+        player_choice = input("----------------------------------------\nPlease input your choice (buy/exchange/heal"
+                              + "/exit), here: ").lower()
+
+        # while loop; iterates while player input is not in list player choices (thus is not a valid choice)
+        while player_choice not in player_choices:
+            # displays prompt error message to use, retakes in user input choice; converts all letters to lowercase
+            player_choice = input("Sorry, but that was an invalid input. Please re-enter your choice (buy/exchange/" +
+                                  "heal/exit), here: ").lower()
+
+        # tests player choice input value; runs if it is "buy"
+        if player_choice == "buy":
+            # updates player choices list, has shop items player can buy; amount and cost store quantity and total cost
+            player_choices = ["wzs", "es", "ws", "fs", "as", "bhp", "shp", "mhp", "rp"]
+            amount, cost = int(), int()
+            # creates matrix options info to store the specific info to display per item (name, price, player inv)
+            options_info = [["Wizard Stones", 250, player.wizard_stones], ["Earth Stones", 100, player.stones_inv[0]],
+                            ["Water Stones", 100, player.stones_inv[1]], ["Fire Stones", 100, player.stones_inv[2]],
+                            ["Air Stones", 100, player.stones_inv[3]],
+                            ["Basic Health Potions", 50, player.healing_potions[0]],
+                            ["Supreme Health Potions", 75, player.healing_potions[1]],
+                            ["Master Health Potions", 125, player.healing_potions[2]],
+                            ["Revival Health Potions", 200, player.healing_potions[3]]]
+
+            # displays message to player, indicating items for sale and their sale price (player gold also displayed)
+            print("----------------------------------------------------------------\nWelcome, " + player.name + ". At "
+                  + "the Druid Shop, you can spend gold and purchase: \nWizard Stones (wzs): to summon wizards to join "
+                  + "your band, or upgrade your wizards\n\tCost: 250 Gold-> 1 Wizard Stone\nElemental Stones " +
+                  "(es/ws/fs/as): earth, water, fire or air stones to upgrade your wizards' moves\n\tCost: 100 Gold -> "
+                  + "1 Elemental Stone\nHealth Potions (bhp/shp/mhp/rp): to heal your wizards after battle\n\tCost: " +
+                  "50 Gold -> 1 Basic Potion; 75 Gold -> 1 Supreme Potion; 125 Gold -> 1 Master Potion; 200 Gold -> " +
+                  "1 Revival Potion\n\nYou have " + str(player.gold) + " Gold to spend here; spend it all wisely.")
+
+            # displays prompt message to player, intakes user choice for item to purchase; converts letters to lowercase
+            player_choice = input("Please enter what you would like to buy (wzs/es/ws/fs/as/bhp/shp/mhp/rp), here: "
+                                  ).lower()
+
+            # while loop; iterates while player choice not in list player choices (thus is not a valid input choice)
+            while player_choice not in player_choices:
+                # displays prompt error message, retakes user input choice for item to purchase; converts to lowercase
+                player_choice = input("Sorry, but that was an invalid choice.\nPlease re-enter what you would like " +
+                                      "to buy (wzs/es/ws/fs/as/bhp/shp/mhp/rp), here: ").lower()
+
+            # uses player choice input to retrieve necessary information/variables related to buying chosen shop item
+            if player_choice == "wzs":
+                # retrieves necessary information/variables from options info matrix for buying wizard stones
+                player_choice, exchange_rate, player_option = options_info[0]
+            elif player_choice == "es":
+                # retrieves necessary information/variables options info matrix for for buying earth stones
+                player_choice, exchange_rate, player_option = options_info[1]
+            elif player_choice == "ws":
+                # retrieves necessary information/variables options info matrix for for buying water stones
+                player_choice, exchange_rate, player_option = options_info[2]
+            elif player_choice == "fs":
+                # retrieves necessary information/variables options info matrix for for buying fire stones
+                player_choice, exchange_rate, player_option = options_info[3]
+            elif player_choice == "as":
+                # retrieves necessary information/variables options info matrix for for buying air stones
+                player_choice, exchange_rate, player_option = options_info[4]
+            elif player_choice == "bhp":
+                # retrieves necessary information/variables options info matrix for for buying basic health potions
+                player_choice, exchange_rate, player_option = options_info[5]
+            elif player_choice == "shp":
+                # retrieves necessary information/variables options info matrix for for buying supreme health potions
+                player_choice, exchange_rate, player_option = options_info[6]
+            elif player_choice == "mhp":
+                # retrieves necessary information/variables options info matrix for for buying master health potions
+                player_choice, exchange_rate, player_option = options_info[7]
+            else:
+                # retrieves necessary information/variables options info matrix for for buying revival health potions
+                player_choice, exchange_rate, player_option = options_info[8]
+
+            # infinite while loop
+            while True:
+                # try structure attempts to take in player input
+                try:
+                    # displays the unit price for player's chosen shop item to purchase, and player's current gold;
+                    # displays prompt message to player, intakes player input for quantity of chosen shop item to buy
+                    amount = int(input(player_choice + "cost " + str(exchange_rate) + " Gold each. You currently have "
+                                       + str(player.gold) + " Gold.\nPlease indicate how many " + player_choice + " you"
+                                       + " would like to buy (enter 0 if you want to cancel the purchase), here: "))
+
+                    # tests integer value of variable amount; runs if it is 0 (player wants to cancel purchase)
+                    if amount == 0:
+                        # breaks out of infinite while loop
+                        break
+                    # tests integer value of variable amount; runs if it is smaller than 0 (invalid input)
+                    elif amount <= 0:
+                        # displays prompt error message to user, indicating that negative values are invalid inputs
+                        print("Sorry, but that was an invalid negative integer value. Please re-enter a value below.")
+                    # runs assuming player inputted valid positive integer value
+                    else:
+                        # calculates cost by multiplying amount to purchase with price per unit/item, stores in cost
+                        cost = amount * exchange_rate
+
+                        # compares cost of player purchase with player's gold reserves; runs if cost exceeds reserves
+                        if cost > player.gold:
+                            # displays prompt error message to player, indicating that he/she cannot afford the price
+                            print("Sorry, but you do not have enough Gold (" + str(player.gold) + ") to make that " +
+                                  "purchase (" + str(cost) + ").\nPlease re-enter an amount that you can afford below.")
+                        # runs assuming cost of player purchase does not exceed player's gold reserves (is affordable)
+                        else:
+                            # breaks out of infinite while loop
+                            break
+
+                # runs assuming a ValueError was encountered in try structure's attempt to take in player input
+                except ValueError:
+                    # displays prompt error message to player, prompting for re-entry of valid integer value
+                    print("Sorry, but that was an invalid input. Please re-enter a valid integer amount to buy below.")
+
+            # updates player gold and inventory amounts, subtracting spent gold and adding purchased inventory items
+            player.gold -= cost
+            player_option += amount
+
+            # displays message to player, indicating that the shop item(s) purchase was successfully completed
+            print("You have successfully bought " + str(amount) + " " + player_choice + " for a grand total of " +
+                  str(cost) + " Gold. ")
+
+            # displays prompt message to player, intakes player choice to either buy or exit shop; coverts to lowercase
+            player_choice = input("Would you like to buy something else from the Druid Shop (buy), or leave (exit)?" +
+                                  "\nPlease indicate your choice (buy/exit), here: ").lower()
+
+            # while loop; iterates while player choice input is not "buy" or "exit"
+            while (player_choice != "buy") and (player_choice != "exit"):
+                # displays prompt error message, retakes in user input choice, converts all input letters to lowercase
+                player_choice = input("Sorry, but that was an invalid choice. Please re-enter your choice (buy/leave), "
+                                      + "here: ").lower()
+
+            # displays message separator
+            print("----------------------------------------------------------------")
+
+            # tests player choice input value; runs if it is "buy"
+            if player_choice == "buy":
+                # displays message, indicates to player that he/she will be redirected to the druid shop momentarily
+                print("You will be redirected back to the Druid Shop momentarily...")
+            # runs assuming player choice input value is "exit"
+            else:
+                # delay of 1.5 seconds
+                time.sleep(1.5)
+                # displays message, indicates to player that he/she will be redirected to the main menu momentarily
+                print("You will be redirected back to the main menu momentarily...")
+                # breaks out of druid shop infinite while loop
+                break
+
+        # tests player choice input value; runs if it is "exchange"
+        elif player_choice == "exchange":
+            # updates player choices list, has items that player can exchange for gold (wizard/elemental stones)
+            player_choices = ["wz2g", "e2g", "w2g", "f2g", "a2g"]
+            # creates choices info matrix to store stones variables/names and exchange rates
+            choices_info = [[player.wizard_stones, "Wizard Stone(s)", 250],
+                            [player.stones_inv[0], "Earth Stone(s)", 100],
+                            [player.stones_inv[1], "Water Stone(s)", 100],
+                            [player.stones_inv[2], "Fire Stone(s)", 100],
+                            [player.stones_inv[3], "Air Stone(s)", 100]]
+            # creates variable choice_no to store player's choice (as an integer value) and gold earned from exchange
+            choice_no, gold_earned = int(), int()
+
+            # displays message to player, and shows exchange rates for wizard/elemental stones to gold
+            print("----------------------------------------------------------------\nWelcome, " + player.name + ". At "
+                  + "the Druid Shop, you make the following currency/resource exchanges at the following rates:" +
+                  "\n1 Wizard Stone -> 250 Gold (wz2g)\n1 Earth/Water/Fire/Air Stone -> 100 Gold (e2g/w2g/f2g/a2g)")
+
+            # displays prompt message to player, intakes place choice input for stones, converts letters to lowercase
+            player_choice = input("----------------------------------------\nPlease input your choice (wz2g/e2g/w2g" +
+                                  "/f2g/a2g), here: ").lower()
+
+            # while loop; iterates while player choice input is not in list player choices (thus input is invalid)
+            while player_choice not in player_choices:
+                # displays prompt error message to player, retakes in user input choice, converts all to lowercase
+                player_choice = input("Sorry, but that was an invalid input. Please re-input your choice (wz2g/e2g/w2g"
+                                      + "/f2g/a2g), here: ").lower()
+
+            # tests player choice input value; runs if it is "wz2g" (exchanging Wizard Stones for Gold)
+            if player_choice == "wz2g":
+                # assigns value 0 to choice_no (to be used as index value to retrieve Wizard Stones Exchange Info)
+                choice_no = 0
+            # tests player choice input value; runs if it is "e2g" (exchanging Earth Stones for Gold)
+            elif player_choice == "e2g":
+                # assigns value 1 to choice_no (to be used as index value to retrieve Earth Stones Exchange Info)
+                choice_no = 1
+            # tests player choice input value; runs if it is "w2g" (exchanging Water Stones for Gold)
+            elif player_choice == "w2g":
+                # assigns value 2 to choice_no (to be used as index value to retrieve Water Stones Exchange Info)
+                choice_no = 2
+            # tests player choice input value; runs if it is "f2g" (exchanging Fire Stones for Gold)
+            elif player_choice == "f2g":
+                # assigns value 3 to choice_no (to be used as index value to retrieve Fire Stones Exchange Info)
+                choice_no = 3
+            # runs assuming player choice input value is "a2g" (exchanging Air Stones for Gold)
+            else:
+                # assigns value 4 to choice_no (to be used as index value to retrieve Air Stones Exchange Info)
+                choice_no = 4
+
+            # infinite while loop
+            while True:
+                # try structure attempts to intake player input integer value for quantity of stones to exchange
+                try:
+                    # displays message separator and prompt message to player, intakes integer quantity value
+                    input_num = int(input("----------------------------------------\nYou currently have " +
+                                          str(choices_info[choice_no][0]) + " " + choices_info[choice_no][1] + "." +
+                                          "\nPlease input the number of " + choices_info[choice_no][1] + " that you " +
+                                          "would like to exchange for gold (1 stone -> " +
+                                          str(choices_info[choice_no][2]) + " gold), here: "))
+                    # tests value of player integer input; runs if greater than player's current inventory quantity
+                    if input_num > choices_info[choice_no][0]:
+                        # displays prompt error message to player, indicating that chosen quantity exceeds inventory
+                        print("Sorry, but you do not have that quantity of", choices_info[choice_no][1] + " to trade.")
+                    # tests value of player integer input; runs if less than 0 (invalid negative integer value)
+                    elif input_num < 0:
+                        # displays prompt error message to player, indicating that chosen quantity cannot be exchanged
+                        print("Sorry, but you cannot trade a negative quantity of " + choices_info[choice_no][1] + ".")
+                    # runs assuming value of player integer input is greater than 0 and does not exceed player inventory
+                    else:
+                        # calculates gold earned from stones exchange; stores amount in variable gold earned
+                        gold_earned = input_num * choices_info[choice_no][2]
+                        # breaks out of infinite while loop
+                        break
+
+                # except structure runs if try structure encounters ValueError in attempt to intake player integer value
+                except ValueError:
+                    # displays error prompt message to player, indicating that input made was invalid
+                    print("Sorry, but that was an invalid input. Please re-enter a valid integer input below.")
+
+            # removes number of stones from player stones inventory, adds earned gold amount to player gold inventory
+            choices_info[choice_no][0] -= input_num
+            player.gold += gold_earned
+
+            # displays message to player, indicating that chosen exchange of stones was successful
+            print("You have successfully exchange " + str(input_num) + " " + choices_info[choice_no][1] + "for " +
+                  str(gold_earned) + " gold.\nYou will return to browsing the Druid Shop momentarily...")
+
+        # tests player choice input value; runs if it is "heal"
+        elif player_choice == "heal":
+            # infinite while loop
+            while True:
+                # updates player choices list to contain possible player options for this particular function
+                player_choices = ["heal", "lvl_wz", "summon", "up_wz_atc"]
+                # displays message separator and welcome message to player to druid shop, lists possible options
+                print("----------------------------------------------------------------\nWelcome, " + player.name +
+                      ".\nAt the Druid Shop, you can review your wizards, and use:\nHealth Potions: to restore " +
+                      "wizards' health to varying degrees (depends on potion)\nWizard Stones: to level up wizards, or "
+                      + "summon new ones\nElemental Stones: to level up wizards' attacks, using corresponding stones")
+
+                # displays prompt message to player, intakes player choice input and converts all letters to lowercase
+                player_choice = input("Please indicate whether you would like to heal wizards (heal), level up or " +
+                                      "summon wizards (lvl_wz/summon) or upgrade wizard attacks (up_wz_atc), here: "
+                                      ).lower()
+
+                # while loop; runs while player choice input is not in list "player choices" (thus is invalid)
+                while player_choice not in player_choices:
+                    # displays prompt error message to player, retakes player input, converts all letters to lowercase
+                    player_choice = input("Sorry, but that was an invalid input. Please indicate your choice (heal/" +
+                                          "lvl_wz/summon/up_wz_atc), here: ").lower()
+
+                # tests player choice input value; runs if it is "heal"
+                if player_choice == player_choices[0]:
+                    # displays message to player, indicating that an overview of his/her wizard's healths will be shown
+                    print("Here is an overview of the current health of all of your wizards in your band:")
+
+                    # for loop; iterates for number of wizards in list wizards
+                    for counter in range(0, len(wizards)):
+                        # prints wizard band slot number, wizard's name and current vs. max hp values
+                        print(str(counter + 1) + ". " + wizards[counter].name + " -> Current/Max HP: " +
+                              str(wizards[counter].current_hp) + " / " + str(wizards[counter].max_hp))
+
+                    player_choice = int(input("Please input the # of the wizard that you would like to heal, here: "))
+
+                    if (player_choice > len(wizards)) or (player_choice <= 0):
+                        player_choice = input("Sorry. but that was an invalid input. Please input the number of the " +
+                                              "wizard that you would like to heal, here: ")
+
+                    wiz_2_heal = wizards[player_choice - 1]
+
+                    player_choices = ["bhp", "shp", "mhp", "rp"]
+                    player_options = ["Basic Health Potions: ", "Supreme Health Potions: ", "Master Health Potions: ",
+                                      "Revival Potions: "]
+
+                    print("Here is an overview of your current inventory of health potions:")
+                    for counter in range(0, 4):
+                        print(player_options[counter] + str(player.healing_potions[counter]))
+
+                    player_choice = input("Which potion would you like to use for your wizard, " + wiz_2_heal.name + "?"
+                                          + "\nPlease indicate your choice (bhp/shp/mhp/rp), here: ")
+                    player_choice.lower()
+
+                    while player_choice not in player_choices:
+                        player_choice = input("Sorry, but that was an invalid input.\nPlease indicate your choice " +
+                                              "(bhp/shp/mhp/rp), here: ")
+                        player_choice.lower()
+
+                    if player_choice == "bhp":
+                        wiz_2_heal.current_hp += 20
+                    elif player_choice == "shp":
+                        wiz_2_heal.current_hp += 30
+                    elif player_choice == "mhp":
+                        wiz_2_heal.current_hp += 50
+                    else:
+                        wiz_2_heal.current_hp = wiz_2_heal.max_hp
+
+                    if wiz_2_heal.current_hp > wiz_2_heal.max_hp:
+                        wiz_2_heal.current_hp = wiz_2_heal.max_hp
+                    else:
+                        pass
+
+                # for leveling up wizards
+                elif player_choice == player_choices[1]:
+                    pass
+
+                # for summoning new wizards
+                elif player_choice == player_choices[2]:
+                    pass
+
+                # for upgrading wizard attacks
+                else:
+                    pass
+
+                # displays prompt message to player, intakes player choice input; converts all letters to lowercase
+                player_choice = input("Would you like to continue to heal/level up/upgrade other wizards, or " +
+                                      "return back to browsing the Druid Shop?\nPlease indicate your choice " +
+                                      "(stay/return), here: ").lower()
+
+                # while loop; iterates while player choice is neither "stay" nor "return" (thus is an invalid input)
+                while (player_choice != "stay") and (player_choice != "return"):
+                    # displays error prompt message to player, retakes user input choice; converts letters to lowercase
+                    player_choice = input("Sorry, but that was an invalid input. Please re-enter a valid choice, " +
+                                          "here: ").lower()
+                # tests player choice input; runs if it is "stay"
+                if player_choice == "stay":
+                    # runs next iteration of infinite while loop controlling heal function of druid shop
+                    continue
+                # runs assuming player choice input is "return"
+                else:
+                    # displays message to player, indicating that he/she will be returned to the druid shop momentarily
+                    print("You will return to browsing the Druid Shop momentarily...")
+                    # breaks out of infinite while loop
+                    break
+
+        # runs assuming player choice input value is "exit"
+        else:
+            # delay of 1.5 seconds
+            time.sleep(1.5)
+            # displays message separator and message, telling player that he/she will be redirected to main menu
+            print("----------------------------------------------------------------\nYou will be redirected back to " +
+                  "the main menu momentarily...")
+            # breaks out of druid shop infinite while loop
+            break
+
+
+# quit function; runs whenever the player indicates that he/she would like to quit the game
+def quit_function():
+    # delay of 1 second
+    time.sleep(1)
+    # displays prompt message to player, to get quit confirmation
+    quit_confirm = input("------------------------------------------------\nYou have indicated that you would like " +
+                         "to quit the game.\nPlease confirm this by entering either \"yes\" to confirm quitting, " +
+                         "or \"no\" to return back to playing the game, here: ")
+
+    # while loop runs while player input is neither "yes" nor "no"
+    while (quit_confirm != "yes") and (quit_confirm != "no"):
+        # delay of 0.5 seconds
+        time.sleep(0.5)
+        # displays prompt to player, and retakes in player input (yes/no)
+        quit_confirm = input("Sorry, by that was an invalid choice. Please re-enter a valid choice (yes/no), here: ")
+
+    # tests if player input is yes (confirming player choice to quit)
+    if quit_confirm == "yes":
+        # delay of 1 second
+        time.sleep(1)
+        # prints game termination message to the console
+        print("------------------------------------------------------------------------------------------------" +
+              "\nThe game will now terminate. Thank you for playing World Of Wizards, and have a nice day." +
+              "\n\n=============================== World Of Wizards Game Termination ==============================")
+        # delay of 1 second
+        time.sleep(1)
+        # terminates the running game
+        quit()
+    # else statement runs, assuming that the player's choice was to return back to playing the game
+    else:
+        # passes to return back to playing the game
+        pass
+
+
+# mainframe code function; mainframe code that controls the entire game, referencing various functions as needed
+def mainframe_code():
+
+    # referencing start menu function (game initiation code)
+    start_menu()
+    # referencing play quit function (player chooses to play/quit game)
+    play_quit()
+    # referencing user generation function (generates new player with default starter inventory and 2 wizards)
+    player_generation()
+
+    # infinite while loop, which controls main processing function of game
+    while True:
+        # referencing in game function (in game main menu that allows player to makes choices while playing the game)
+        in_game()
+        # referencing play quit function (player chooses to continue to play/quit game)
+        play_quit()
+
+
+# referencing mainframe code function, to initiate the game mainframe function code
+mainframe_code()
