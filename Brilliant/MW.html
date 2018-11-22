@@ -58,16 +58,116 @@
   <pre class="prettyprint linenums:1">
   <code style="font-family: monospace;font-weight:initial;margin-bottom:40px"> 
          
-  def samplecode(x):
-      """Return the square of x.
+#ICS4U0
+#Mark Wspanialy
+#2018-10-24
+#This program encrypts and decrypts messages to files, and decrypts messages from files.
 
-      >>> square(2)
-      4
-      >>> square(-2)
-      4
-      """
+#For testing
+import random
+import string
 
-      return x * x
+#Standardized Testing
+import unittest
+
+class Test(unittest.TestCase):
+    def test_encrypt(self):
+        self.assertEqual(encrypt('Hello my name is Simon.'), '[:eenm%qm8\%:mt^mCt%n8 ')
+    def test_decrypt(self):
+        self.assertEqual(decrypt('[:eenm%qm8\%:mt^mCt%n8 '), 'Hello my name is Simon.')
+    #Can't test decrypt from file, but it runs off of the decrypt definition, so if decrypt works it will work
+    #def test_decrypt_from_file(self):
+        #self.assertEqual('[:eenm%qm8\%:mt^mCt%n8 '.decrypt_through_file(), 'Hello my name is Simon.')
+
+#Makes an alphabet to use, both capitals and lower case
+alphabet = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 !@#$%^&*()<>?:\{}|,.;'[]/-+"
+#Re-aranged the values in different spots
+
+secret_message = b"ZMuQ|0I[L&Gk#KYg*BCrlA7ps-\\Vw+:]'it)ye%8nxOT^{Uz1Eqv./S}5>FDPhmNf?c94doR@X$;32j(a! ,H6J<Wb"
+#Both start with b, to signal they are bytes, so we can use them for translation
+
+#Makes both byte messages into trans (translation strings)
+encryption = bytes.maketrans(alphabet,secret_message)
+#Allows translation back and forth
+decryption = bytes.maketrans(secret_message,alphabet)
+
+def encrypt(message):
+    '''
+    Takes in message, writes to file 'encrypted.txt'
+    '''
+    global encryption
+    #encrypts it
+    translated = message.translate(encryption)
+    encryption_file = open('encrypted.txt', 'w')
+    encryption_file.write(translated)
+    encryption_file.close()
+    return translated
+def decrypt(message):
+    '''
+    Takes in message, writes to file 'decrypted.txt'
+    '''
+    global decryption
+    translated = message.translate(decryption)
+    decryption_file = open('decrypted.txt', 'w')
+    decryption_file.write(translated)
+    decryption_file.close()
+    return translated
+
+def decrypt_through_file():
+    '''
+    Takes a line from a file, decrypts it to file 'decrypted.txt'
+    '''
+    global decryption
+    encrypted_file = open('messages_to_decrypt.txt', 'r')
+    message = encrypted_file.readline()
+    translated = message.translate(decryption)
+    decryption_file = open('decrypted.txt', 'w')
+    decryption_file.write(translated)
+    decryption_file.close()
+
+def test(amount_of_tests, string_length):
+    '''
+    Types a random character sequence, makes sure it can be encrypted and then decrypted back to the same sequence
+    '''
+    for test_number in range(0,amount_of_tests):
+        message = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits + string.punctuation) for _ in range(string_length))
+        print(message)
+        translated = message.translate(encryption)
+        print(translated)
+        translated_test = translated.translate(decryption)
+        print(translated_test)
+        if translated_test == message:
+            print("Test Approved")
+        else:
+            print("Test Failed")
+            
+unittest_question = input("Would you like to perform a unittest? It will test encryption and decryption, and end the program. Type \"Yes\" to try, or anything else to skip.")
+if unittest_question == "Yes":
+    unittest.main()
+test_question = input("Would you like to test? Type \"Yes\" to test, or anything else to skip testing. (This will not end the program, and is the recommended test)")
+if test_question == "Yes":
+    while True:
+        try:
+            amount_of_tests = int(input("How many tests(randomized strings) would you like to try?"))
+            letters_per_test = int(input("How many letter per randomized string?"))
+            break
+        except ValueError:
+            print("Both must be integers (numbers, no decimals)")
+    test(amount_of_tests,letters_per_test)
+while True:
+    encrypt_or_decrypt = input("Would you like to encrypt, decrypt or decrypt from a file? Type \"Encrypt\", \"Decrypt\" or \"File\" to choose or \"End\" to quit.")
+    if encrypt_or_decrypt == "Encrypt":
+        message = input("What would you like to encrypt?")
+        encrypt(message)
+    elif encrypt_or_decrypt == "Decrypt":
+        message = input("What would you like to decrypt?")
+        decrypt(message)
+    elif encrypt_or_decrypt == "File":
+        decrypt_through_file()
+    elif encrypt_or_decrypt == "End":
+        break
+    else:
+        print("You must type \"Encrypt\" or \"Decrypt\", or End to quit.")
 
   </code></pre>
 </div>    
