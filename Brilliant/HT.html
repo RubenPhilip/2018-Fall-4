@@ -50,7 +50,7 @@
   <!-- Header -->
   <div class="w3-container" style="margin-top:50px" id="">
     <h1 class="w3-xxlarge"><b>HT</b></h1>
-    <p style="font-weight:initial">A description, if you like</p>
+    <p style="font-weight:initial">Testing Code:</p>
   </div> 
 
   <!-- YOUR CODE (paste between the <code> and </code> tags) -->
@@ -58,16 +58,472 @@
   <pre class="prettyprint linenums:1">
   <code style="font-family: monospace;font-weight:initial;margin-bottom:40px"> 
          
-  def samplecode(x):
-      """Return the square of x.
+	#Humyra Taifoor
+	#Testing Encryption Functions
+	#November 19 2018
 
-      >>> square(2)
-      4
-      >>> square(-2)
-      4
-      """
+	import itertools                            #imports itertools and allows the comparison of 2 lists
+	import time                                 #imports the time module
 
-      return x * x
+	def testing_1():
+	    """(str)-> str
+	    Runs the code with the assigned test cases and compares the expected outputs and the actual outputs.
+	    If the expcted output and the actual output match, then it returns pass, if not, then it returns false.
+	    >>>testing_1('hi')
+	    Pass
+	    >>>testing_1('123community')
+	    Pass
+	    """
+	    print("Using the first method of encryption, our test cases are 'hi', '123community','dollar for your sadness','cOm+5l![At3D_w.<?/', '2*2^4+58'|'', '   '")
+	    print("and the expected outputs are 'ihoy', 'ytinummoc321oy', 'ssendas ruoy rof rallodoy','/?<.w_D3tA[!l5+mOcoy',''|'85+4^2*2oy', '   oy'")
+	    test_cases = ['hi', '123community','dollar for your sadness','cOm+5l![At3D_w.<?/', "2*2^4+58'|'", '   ']
+	    output_from_code = []
+	    expected_output = ['ihoy', 'ytinummoc321oy', 'ssendas ruoy rof rallodoy','/?<.w_D3tA[!l5+mOcoy',"'|'85+4^2*2oy", '   oy']
+
+	    #encryption code
+	    for x in test_cases:                    #iterates through every item in test_cases
+
+		y = list(x[::-1])                   #reverses every word 
+		y.append('oy')                      #adds an oy to the end of the last word of the reversed phrase 
+		z = ''.join(y)                      #turns the list back into a string
+		output_from_code.append(z)          #appends the output from the encryption code to output_from_code so that it can be compared later
+
+	    #comparing outputs
+	    for f,b in itertools.zip_longest(output_from_code,expected_output):#runs through every item in output_from_code and expected_output and runs until the longest iterable ends
+		if f == b:                          #compares the output from the code and the expected output
+		    print("Pass")                   #if the output from the code and the expected output are the same, it prints pass
+		else:
+		    print("False")                  #if the output from the code and the expected output are not the same, it prints false
+
+	testing_1()
+	print("   ")
+
+	def testing_2():
+	    """(str)-> str
+	    Runs the code with the assigned test cases and compares the expected outputs and the actual outputs.
+	    If the expcted output and the actual output match, then it returns pass, if not, then it returns false.
+	    >>>testing_2('ihoy')
+	    Pass
+	    >>>testing_2('ytinummoc321oy')
+	    Pass
+	    """
+	    print("Using the first method of decryption, our test cases are 'ihoy', 'ytinummoc321oy', 'ssendas ruoy rof rallodoy','/?<.w_D3tA[!l5+mOcoy',''|'85+4^2*2oy', '   oy'")
+	    print("and the expected outputs are 'hi', '123community','dollar for your sadness','cOm+5l![At3D_w.<?/', '2*2^4+58'|'', '   '")
+	    test_cases = ['ihoy', 'ytinummoc321oy', 'ssendas ruoy rof rallodoy','/?<.w_D3tA[!l5+mOcoy',"'|'85+4^2*2oy", '   oy']
+	    output_from_code = []
+	    expected_output = ['hi', '123community','dollar for your sadness','cOm+5l![At3D_w.<?/', "2*2^4+58'|'", '   ']
+
+	    #decryption code
+	    for x in test_cases:                    #iterates through every item in test_cases
+
+		y = list(x[::-1])                   #turns the phrase into a list and reverses the letters
+		y.remove('y')                       #removes the 'y' that was orginally added
+		y.remove('o')                       #removes the 'o' that was orginally added
+		z = ''.join(y)                      #turns the list back into a string
+		output_from_code.append(z)          #appends the output from the encryption code to output_from_code so that it can be compared later
+
+	    #comparing outputs     
+	    for f,b in itertools.zip_longest(output_from_code,expected_output):#runs through every item in output_from_code and expected_output and runs until the longest iterable ends
+		if f == b:                          #compares the output from the code and the exected output
+		    print("Pass")                   #if the output from the code and the expected output are the same, it prints pass
+		else:
+		    print("False")                  #if the output from the code and the expected output are not the same, it prints false
+
+	time.sleep(0.5)
+	testing_2()
+	print("   ")
+
+	def testing_3():
+	    """(str)-> str
+	    Runs the code with the assigned test cases and the assigned key and compares the expected outputs and the actual outputs.
+	    If the expcted output and the actual output match, then it returns pass, if not, then it returns false.
+	    >>>testing_3('hi')
+	    Pass
+	    >>>testing_3('|')
+	    False
+	    """
+	    print("Using the second method of encryption, in which the key is '5', our test cases are 'hi', '123community',")
+	    print("'dollar for your sadness','cOm+5l![At3D_w.<?/', '2*2^4+58'|'', '   ','|'','|'")
+	    print("And the expected outputs are 'mn', '678htrrzsny~',")
+	    print("'ssendas ruoy rof rallodoy','/?<.w_D3tA[!l5+mOcoy',''|'85+4^2*2oy', '   oy','|'','|'")
+	    test_cases = ['hi', '123community','dollar for your sadness','cOm+5l![At3D_w.<?/', "2*2^4+58'|'", '   ',"|'",'|']
+	    key = '5'
+	    output_from_code = []
+	    expected_output = ['mn', '678htrrzsny~','itqqfw%ktw%~tzw%xfisjxx','hTr0:q&`Fy8Id|3AD4','7/7c90:=,�,', '%%%','�"','�']
+
+	    #encryption code   
+	    for x in test_cases:                    #iterates through every item in test_cases
+		output = []                         #this allows the appending of numbers to these variables later
+		finaloutput = []
+		finalword = []
+
+		for character in x:                 #a for loop for every character in the variable x
+		      number = ord(character)       #turns each letter into a number (ASCII number)
+		      output.append(number)         #appends each number to the variable output 
+		for character in output:            #a for loop for every character in output
+		      character = int(character) + int(key)#adds the key to the number that represents the letter from the inpuuted message and adds it to every number in output
+		      finaloutput.append(character) #appends each new number to the variable finaloutput
+		x = finaloutput
+		for i in x:                         #a for loop for every i in the variable x (the variable x is the list of new numbers)
+		    finalword.append(chr(i))        #iteratures through the list and turns every ASCII number back into a letter and appends them to the variable finalword
+		y = finalword
+		newword = ''.join(y)                #turns the list of the letters into a string
+		output_from_code.append(newword)    #appends the output from the encryption code to output_from_code so that it can be compared later
+
+	    #comparing outputs    
+	    for f,b in itertools.zip_longest(output_from_code,expected_output):
+		if f == b:                          #compares the output from the code and the exected output
+		    print("Pass")                   #if the output from the code and the expected output are the same, it prints pass
+		else:
+		    print("False")                  #if the output from the code and the expected output are not the same, it prints false
+
+
+	time.sleep(0.5)
+	testing_3()    
+	print(" ")
+
+	def testing_4():
+	    """(str)-> str
+	    Runs the code with the assigned test cases and the assigned key and compares the expected outputs and the actual outputs.
+	    If the expcted output and the actual output match, then it returns pass, if not, then it returns false.
+	    >>>testing_4('mn')
+	    Pass
+	    >>>testing_4('�')
+	    False
+	    """
+	    print("Using the second method of decryption, in which the key is '5', our test cases are 'ihoy', 'ytinummoc321oy',")
+	    print("'ssendas ruoy rof rallodoy','/?<.w_D3tA[!l5+mOcoy',''|'85+4^2*2oy', '   oy','|'','|'")
+	    print("And the expected outputs are 'hi', '123community','dollar for your sadness','cOm+5l![At3D_w.<?/', '2*2^4+58'|'', '   ','|'','|'")
+	    test_cases = ['mn', '678htrrzsny~','itqqfw%ktw%~tzw%xfisjxx','hTr0:q&`Fy8Id|3AD4','7/7c90:=,�,', '%%%','�"','�']
+	    key = '5'
+	    output_from_code = []
+	    expected_output = ['hi', '123community','dollar for your sadness','cOm+5l![At3D_w.<?/', "2*2^4+58'|'", '   ',"|'",'|']
+
+	    #decryption code
+	    for x in test_cases:
+
+		output = []                          #this allows the appending of numbers to these variables later  
+		finaloutput = []
+		finalword = []   
+		for character in x:                  #a for loop for every character in the variable x
+		    number = ord(character)          #turns each letter into a number
+		    output.append(number)            #appends each number to the variable output 
+
+		for character in output:             #a for loop for every character in output
+		    character = int(character) - int(key)#subtracts the key to the number that represents the letter from the encrypted message
+		    finaloutput.append(character)    #appends each number to the variable finaloutput
+		x = finaloutput
+
+		for i in x:                          #a for loop for every i in the variable x
+		    finalword.append(chr(i))         #turns the numbers back into letters and appends them to the variable finalword
+		y = finalword                        #assigns the final word to variable y
+		newword = ''.join(y)                 #turns the list of the letters into a string
+		output_from_code.append(newword)     #appends the output from the encryption code to output_from_code so that it can be compared later
+
+	    #comparing outputs   
+	    for f,b in itertools.zip_longest(output_from_code,expected_output):
+		if f == b:                          #compares the output from the code and the exected output
+		    print("Pass")                   #if the output from the code and the expected output are the same, it prints pass
+		else:
+		    print("False")                  #if the output from the code and the expected output are not the same, it prints false
+
+	time.sleep(0.5)
+	testing_4()
+	print(" ")
+	print("To see what the actual outputs are for the failed tests, open up the encryption.py file from assignment 3")
+
+
+	 <p style="font-weight:initial">Enryption/Decryption Code:</p>
+
+	#Humyra Taifoor
+	#Encryption and file input/output
+	#October 24 2018
+
+	import string #imports the string module
+	import sys #imports the sys module and allows an easy exit
+	#this is one of the encrypting functions
+	#it will take your words, reverse the letters of the whole phrase, and add an oy to the last word of the sentence.
+	#it will take message, write it to the file called original.text to store it and then
+	# it will encrypt it, and write it to the file called encrypted.txt
+
+	#this means that the encryption function was called and in this function,
+	#it asks which encryption process to use and calls the approprate fuunction
+	def encryption_time():
+	    """"
+	    (str)->str
+	    1
+	    >>> #will call the encrypt function and run that
+	    2
+	    >>> #will call the encryption function and run that 
+	    """
+	    #this puts the input in a loop so that if the incorrect input is entered, it will repeat itself
+	    x = True
+	    while x:
+		hello = input("If you want to try the first encryption, type '1', if you want to try the second encryption, type '2': ")
+		if hello == '1':
+		    encrypt()
+		    sys.exit()
+		if hello == '2':
+		    encryption()
+		    sys.exit()
+		if hello == 'done':
+		    print("Goodbye")
+		    x = False
+		    sys.exit()              #allows the user to exit
+		elif hello != '1' or '2' or 'done':
+		    print("Please enter a number!")
+		    x = True
+
+	#this means that the decryption function was called and in this function,
+	#it asks which decryption process to use and calls the approprate fuunction
+	def decryption_time():
+	    """(str)->str
+	    1
+	    >>> #will call the decrypt function and run that
+	    2
+	    >>> #will call the decryption function and run that 
+	    """
+	    #this puts the input in a loop so that if the incorrect input is entered, it will repeat itself
+	    x = True
+	    while x:
+		woah = input("Try encryption first then this! So if you want to encrypt, type '3'! If you try decryption before encrypting, the program crashes!!! If you did the first encryption, then type '1', if you did the second encryption, type '2': ")
+		if woah == '1':
+		    decrypt()
+		    sys.exit()
+		if woah == '2':
+		    decryption()
+		    sys.exit()
+		if woah == '3':
+		    encryption_time()
+		    sys.exit()
+		if woah == 'done':
+		    print("Goodbye")
+		    x = False
+		    sys.exit()                  #allows the user to exit
+		if woah != '1' or '2' or '3' or 'done':
+		    print("Please enter a number!")
+		    x = True
+
+	def encrypt():
+	    """(str) -> str
+	    Takes an input and returns your encrypted message in the file called encrypted.txt
+	    hi
+	    >>>ihoy
+	    this is cool
+	    >>>looc si sihtoy
+	    """
+	    x = input("Enter text: ")           #allows the user to input a phrase
+	    if x == 'done':
+		print("Done is an exit term, so goodbye!") 
+		sys.exit()                      #allows the user to exit
+
+	    encrypt = open('encrypted.txt', 'w')#opens the encrypted.txt file and allows the option to write to it
+	    y = list(x[::-1])                   #turns the phrase into a list and then reverses the letters of the phrase
+	    y.append('oy')                      #adds an oy to the end of the last word of the reversed phrase 
+	    z = ''.join(y)                      #turns the list back into a string
+	    print("Your encrypted message is: " +z)                            #prints the encrypted message
+	    encrypt.write(str(z))               #writes the message to the file
+	    encrypt.close()                     #closes the file
+	    #this puts the input in a loop so that if the incorrect input is entered, it will repeat itself
+	    question = True
+	    while question:
+		lastq = input("Are you happy with your encryption? If you are, type 'done' to exit. If you aren't, type '1' to try again: ")
+		if lastq == 'done':
+		     sys.exit()                 #allows the user to exit
+		if lastq == '1':
+		     question == False
+		     encryption_time()          #allows the user to rerun code
+		else:
+		    question == True
+
+	#this is another encryption function but this uses caesar cipher
+	def encryption():
+	    """(str)-> str
+	    Takes an input and a key, and then using the key, encrypts the message and returns the encrypted messaged
+	    hi
+	    1
+	    >>>ij
+	    hello
+	    2
+	    >>>jgnnq
+	    """
+	    #fobject = open('original.txt', 'w')#opens the original.txt file and allows the option to write to it
+
+	    x = input("Enter text: ")           #allows the user to input a phrase
+	    if x == 'done':
+		print("Goodbye")
+		some = False
+		sys.exit()                      #allows the user to exit
+
+
+	    output = []                         #this allows the appending of numbers to these variables later
+	    finaloutput = []
+	    finalword = []
+	    #str(fobject.write(x))              #writes the inputted phrase to the file
+	    #fobject.close()                    #closes the file
+
+	    encrypt = open('encrypted.txt','w') #opens the encrypted.txt file and allows the option to write to it
+	    yes = True
+	    while yes:
+		key = input("Enter a key (numbers 1-5): ")#asks for a key to shift the numbers
+		if key == 'done':
+		    print("Goodbye")
+		    sys.exit()                      #allows the user to exit
+		elif key == '1' or '2' or '3' or '4' or '5':
+		    break
+		else:                           #it will repeat the question because the key is incorrect 
+		    print("Please enter the key! It must be a key between 1 and 5!")
+		    yes == True
+
+
+	    for character in x:                 #a for loop for every character in the variable x
+		  number = ord(character)       #turns each letter into a number
+		  output.append(number)         #appends each number to the variable output 
+
+
+	    for character in output:            #a for loop for every character in output
+		  character = int(character) + int(key)#adds the key to the number that represents the letter from the inpuuted message
+		  finaloutput.append(character) #appends each number to the variable finaloutput
+	    x = finaloutput
+
+	    for i in x:                         #a for loop for every i in the variable x
+		finalword.append(chr(i))        #turns the numbers back into letters and appends them to the variable finalword
+	    y = finalword
+	    newword = ''.join(y)                #turns the list of the letters into a string
+	    print("Your encrypted message is: " +newword)#prints the encrypted message
+	    encrypt.write(newword)              #writes the encrypted message to the file
+	    encrypt.close()                     #closes the file
+	    #this puts the input in a loop so that if the incorrect input is entered, it will repeat itself
+	    question = True
+	    while question:
+		lastq = input("Are you happy with your encryption? If you are, type 'done' to exit. If you aren't, type '1' to try again: ")
+		if lastq == 'done':
+		     sys.exit()                 #allows the user to exit
+		if lastq == '1':
+		     question == False
+		     encryption_time()          #allows the user to rerun code
+		else:
+		    question == True
+
+	def decrypt():
+	     """(str)->str
+	     Reads the file encrypted.txt and decrypts the message and returns the decrypted message
+	     ihoy
+	     >>>hi
+	     looc si sihtoy
+	     >>>this is cool
+	     """
+	     decrypt = open('encrypted.txt', 'r')#opens the file encrypted.txt
+	     x = decrypt.read()                  #reads the file and the things in the file is assigned to the variable x
+	     y = list(x[::-1])                   #turns the phrase into a list and reverses the letters
+	     y.remove('y')                       #removes the 'y' that was orginally added
+	     y.remove('o')                       #removes the 'o' that was orginally added
+	     z = ''.join(y)                      #turns the list back into a string
+	     print("Your decrypted message is: " +z +". If you're decrypted message is incorrect,")
+	     print("then that means you didn't enter the correct number when it asked")
+	     print("which encryption you did.")
+	    #prints the decrypted message
+	     decrypt.close                        #closes the file
+
+	     original = open('original.txt', 'w') #opens the file original.txt
+	     original.write(z)                    #writes the decrypted message to the original file
+	     original.close()                     #closes the file
+	     #this puts the input in a loop so that if the incorrect input is entered, it will repeat itself
+	     question = True
+	     while question:
+		 lastq = input("Are you happy with your decryption? If you are, type 'done' to exit. If you aren't, type '1' to try again: ")
+		 if lastq == 'done':
+		      sys.exit()                 #allows the user to exit
+		 if lastq == '1':
+		      question == False
+		      decryption_time()          #allows the user to rerun code
+		 else:
+		      question == True
+
+	#reads the file encrypted.txt and decrypts the phrase from it
+
+	def decryption():
+	    """(str)-> str
+	    Reads the file encrypted.txt and decrypts the message and returns the decrypted message
+	    ij
+	    1
+	    >>>hi
+	    jgnnq
+	    2
+	    >>>hello
+	    """
+	    decryption = open('encrypted.txt', 'r') #opens the file encrypted.txt
+	    x = decryption.read()                #assigns the variable x to whatever items are in the file
+	    output = []                          #this allows the appending of numbers to these variables later  
+	    finaloutput = []
+	    finalword = []
+
+	    yes = True
+	    while yes:
+		key = input("What's the key?: ")#asks for a key to shift the numbers
+		if key == 'done':
+		    print("Goodbye")
+		    sys.exit()                      #allows the user to exit
+		elif key == '1' or '2' or '3' or '4' or '5':
+		    break
+		else:                           #it will repeat the question because the key is incorrect 
+		    print("Please enter the key! It must be a key between 1 and 5! It's the key you entered before!")
+		    yes == True
+
+	    for character in x:                  #a for loop for every character in the variable x
+		number = ord(character)          #turns each letter into a number
+		output.append(number)            #appends each number to the variable output 
+
+	    for character in output:             #a for loop for every character in output
+		character = int(character) - int(key)#subtracts the key to the number that represents the letter from the encrypted message
+		finaloutput.append(character)    #appends each number to the variable finaloutput
+	    x = finaloutput
+
+	    for i in x:                          #a for loop for every i in the variable x
+		finalword.append(chr(i))         #turns the numbers back into letters and appends them to the variable finalword
+	    y = finalword                        #assigns the final word to variable y
+	    newword = ''.join(y)                 #turns the list of the letters into a string
+	    print("Your decrypted message is: " + newword + ". If your decrypted message is incorrect,")
+	    print("then that means you didn't enter the correct number when it asked which encryption")
+	    print("you did or you entered the incorrect number when it asked for the key.")
+	#prints the decrypted message
+
+	    decryption.close                    #closes the file
+
+	    original = open('original.txt', 'w')#opens the file original.txt
+	    original.write(newword)             #writes the varaible newword to the file which is basically the decrypted message 
+	    original.close()                    #closes the file
+	    #this puts the input in a loop so that if the incorrect input is entered, it will repeat itself
+	    question = True
+	    while question:
+		lastq = input("Are you happy with your decryption? If you are, type 'done' to exit. If you aren't, type '1' to try again: ")
+		if lastq == 'done':
+		     sys.exit()                 #allows the user to exit
+		if lastq == '1':
+		     question == False
+		     decryption_time()          #allows the user to rerun code
+		else:
+		    question == True
+
+	#!!! this is the first thing that runs. It asks if you want to encrypt or decrypt and then calls the appropriate function
+	x = True
+	while x: #makes a while loop so that it keeps repeating until user enters '1' or '2'
+	    start = input("Do you want to encrypt or decrypt today?If you want to encrypt, type '1', if you want to decrypt, type '2'. If at any time you want to exit, then type 'done': ")
+	    if start == '1':
+		x = False
+		encryption_time()
+	    if start == '2':
+		x = False
+		decryption_time()
+	    elif start == 'done':
+		print("Goodbye")
+		x = False
+		sys.exit()
+	    else:
+		print("Please enter a number!")
+		x = True
+
+
 
   </code></pre>
 </div>    
