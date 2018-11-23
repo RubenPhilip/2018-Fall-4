@@ -182,8 +182,73 @@ def user_intent():
         msg_to_encrypt()
         file_name_input()
         new_encrypted_file(file_name,encrypt_message(input_message))
-	
-	
+
+#encryption
+scrambled= []
+    
+def encrypt_message(input_message):
+    '''
+    (str) --> (str)
+
+    Encrypts the user's message given an input and a valid pin
+
+    
+    >>>Please enter a string to encode: hello world
+    >>>Please enter a 4 digit password: 1992
+    ăŎŖąĀÿŗþùŁĺ
+    
+    '''
+    global counter
+    global scrambled_message
+    base_scramble = 150
+    #Defines the variable base_unscramble with an initial value of 150
+    counter = 0
+    #Defines the variable counter with an initial value of 0
+    #Asks the user to enter a string that they want to have encrypted
+    scrambled.clear()
+    for character in input_message:
+    #creates a for loop that applies all the following statements to each character in the input message
+        shift1 = ord(character) + (counter+3) + base_scramble + (character_dictionary[0])*((-1)**counter) #[1]
+        shift2 = shift1 + (character_dictionary[counter])**2 #[2]
+        '''
+        [1] This statement takes the ordinal of the character and then adds the value of base_scramble. It then adds to it by the
+            value of counter+3 (counter is proportional to the value of the index of the pin). Finally it is adds the value
+            of character_dictionary of the index zero (first digit of the pin). However, it alternates between positive and
+            negetive as that digit is multiplied by -1 to the power of counter(index)[A].
+                [A] For example, given a pin of 1234. For the first character in the encrypted input, it will add 1 because
+                (1)(-1)^0 = 1, for the second character it will subtract 1 because + (1)(-1)^1 = 1(-1) = -1. For the third character it will
+                once again add 1 and so on and so forth untill all the characters in the input have been used.
+                The final value of this statement is stored in the variable shift_1.
+            
+        [2] The code adds the index of the pin squared to shift1.
+                This means that for the first character it would add first digit of the pin squared to shift1.
+                The second character will be added by the second digit of the pin squared.
+                All the way till the fourth character. At this point the counter will reset because there are
+                only 4 digits for the pin and then loop the digits of the pin again. So the fifth character will have
+                square of the first digit added to it. So on and so forth until all the characters in the
+                input message have have been used. The final result is stored in the variable shift_2
+    
+        '''
+        counter += 1
+        #Adds one to the value of counter with each iteration
+        base_scramble -= counter
+        #Subtracts the value of counter from the value of base_scramble with each iteration
+        if base_scramble <= 0:
+        #if the value of base_scramble is less than or equal to zero
+        #the value of base_scramble is now 40 + 5 times the current value of counter
+            base_scramble = 40 + (5*counter)
+        if counter == 4:
+        #if the value of counter is equal to 4, reset that value of counter to zero.
+            counter = 0
+        scrambled_letter = chr(shift2)
+        #The encrypred character is chracter associated with the Unicode value of shift2
+        scrambled.append(scrambled_letter)
+        #Adds the encrypted character to the the list scrambled
+        scrambled_message = ''.join(scrambled)
+        #Creates a new string by joining the characters in the list scrambled to give the user
+        #an encrypted version of their input.
+    return scrambled_message
+
   </code></pre>
 </div>    
 
