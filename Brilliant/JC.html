@@ -58,7 +58,172 @@
   <pre class="prettyprint linenums:1">
   <code style="font-family: monospace;font-weight:initial;margin-bottom:40px"> 
          
- here
+# Jeffrey Chen
+# October 26, 2018
+# ICS3UR
+# Discription - This program takes an input for a message, and allows the user to encrypt it into a file, as well
+    # as decrypt, pull the file, and delete it.
+
+# Imports the desired libraries
+import random
+import time
+import ast
+import os
+
+# Creates 2 blank variables
+values = []
+main = 0
+
+# This def function takes 2 inputs; one is a blank variable to store the encrypted message and the other one is the
+    # is the message that is being encrypted. The def function then runs a the .randint code, which outputs a random
+    # number from 1 to 14. This number is then added onto the unicode value of the first letter/variable of the message.
+    # This step is repeated until the entire message has been encrypted. The numbers that were used for the encryption
+    # are then put into a list called to be stored later if the user requests to do so.
+def encrypt(msg, done):
+    """ (str, str) -> (str, str)
+    takes 2 str variables (one str is blank) modifies the input, and returns as a different variable.
+    >>> input('hello world','')
+    upzvx%rusf
+    """
+    for letter in msg:
+        y = random.randint(1,14)
+        x = ord(letter)
+        x += y
+        done += chr(x)
+        values.append(y)
+    print(done)
+    values.append(done)
+    return values
+
+# This function takes one input; a blank variable to store the decrypted message. The def function uses the imported
+    # library called ast. This imported library allows the def function to take the string in the saved .txt file that
+    # used to be the list that included the values used to encrypt the message, and return it to its list state. The
+    # function does this by striping "removing" the first stored like (encrypted message) and passing the next line
+    # (values used) through the ast library, which results in turning the str back into a list. The values are then
+    # used to reverse the steps that were applied the message, thus decoding it.
+def decrypt (done):
+    """ (str) -> (str)
+    Takes the inputted name of the .txt file, takes the contents of file, and uses it to decrypt the message to return
+    it to its original state
+    >>> input(file_One)
+    hello world
+    """
+    msg = f.readline().strip('\n')
+    values = ast.literal_eval(f.readline())
+    index = 0
+    for letter in msg:
+        x = ord(letter)
+        y = values[index]
+        x -= y
+        done += chr(x)
+        index += 1
+    print(done)
+    f.close()
+
+# This function takes one input; the encrypted message that was created from the encryption function. The function runs
+# a while loop that test to see if the user wants to store the message as a file. If replied yes, it asks the user to
+# create a file name as a .txt file. The code then runs os to check if the file already exists, and will force the user
+# to create a new file if it does. The function then runs the second part of the code which allows the function to
+# return 2 values instead of one, and turns the list into a str. The 2 strings are then put into the file.
+def store (secret):
+    """(str, list) -> (str, str)
+        Takes the encrypted message from the encrypt function, and the values of the global list, turns the list into
+        a string, and store them into a .txt file
+        >>> f.write(msg + \n)
+        >>> secret = str(secret)
+            f.write(secret)
+    """
+    y = 0
+    while y == 0:
+        z = 0
+        print("<y> <n>")
+        x = input("Would you like to Store the Message?: ")
+        if x == 'y':
+            while z == 0:
+                fileName = input("Please Enter the Name of the File: ") + ".txt"
+                if os.path.isfile(fileName):
+                    print("Error, File Exists.")
+                else:
+                    f = open(fileName, "w", encoding='utf-8')
+                    z = 1
+            msg = secret[-1]
+            del secret[-1]
+            secret = str(secret)
+            f.write(msg + "\n")
+            f.write(secret)
+            f.close()
+            print("Storing File......")
+            time.sleep(2)
+            print("File has Been Stored.")
+            y = 1
+        elif x == 'n':
+            y = 1
+        else:
+            print("Invalid Input")
+
+# Creates the main while loop that runs the entire code
+while main == 0:
+    del values[:]
+    print("-----------------------")
+    # Asks user for an input
+    print("<exit> <encrypt> <decrypt> <pull-file> <delete-file>")
+    options = input("What Would You Like To Do?: ")
+    # kills the code
+    if options == 'exit':
+        exit()
+    elif options == 'encrypt':
+        # This runs the encryption portion of the code.
+        secret = ""
+        message = input("Please Enter a Message: ")
+        print("Encrypting Message......")
+        time.sleep(2)
+        secret = encrypt(message, secret)
+        store(secret)
+    elif options == 'decrypt':
+        msg = ""
+        # This runs the decryption part of the code
+        # This try catch is used to stop the code from crashing if the user inputs a file name that does not exist.
+        while True:
+            fileName = input("Please Enter the Name of the File: ") + ".txt"
+            try:
+                f = open(fileName, "r", encoding='utf-8')
+                break
+            except:
+                print("This File Doesn't Exist.")
+        print("Decrypting Stored File......")
+        time.sleep(2)
+        decrypt(msg)
+    elif options == 'pull-file':
+        # This runs the file extraction part of the code
+        # This try catch is used to stop the code from crashing if the user inputs a file name that does not exist.
+        while True:
+            fileName = input("Please Enter the Name of the File: ") + ".txt"
+            try:
+                f = open(fileName, "r", encoding='utf-8')
+                break
+            except:
+                print("This File Doesn't Exist.")
+        print("Printing.....")
+        time.sleep(2)
+        print(f.read())
+        f.close()
+    elif options == 'delete-file':
+        # this runs the file deleting part of the code
+        # Runs a try catch with os to remove an existing file. The try catch will stop the code from crashing if the
+        # name of the file does not exist.
+        while True:
+            remove = input("Please Enter the Name of the File: ") + ".txt"
+            try:
+                os.remove(remove)
+                break
+            except:
+                print("This File Doesn't Exist.")
+        print("Removing File......")
+        time.sleep(2)
+        print("File Has Been Removed.")
+    else:
+        # Prints when code receives an input other than the expected inputs.
+        print("Invalid Input")
 
   </code></pre>
 </div>    
